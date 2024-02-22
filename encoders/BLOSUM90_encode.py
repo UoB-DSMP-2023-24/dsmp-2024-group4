@@ -45,7 +45,9 @@ epitope.pop(0)
 aa_idx = make_aa_df()
 encode_output= []
 for i in cdr3:
+    print(encode_cdr3(i,aa_idx,20))
     encode_output.append(encode_cdr3(i,aa_idx,20))
+
 # USE PCA to reduce the dimension of the data
 from sklearn.decomposition import PCA
 pca = PCA(n_components=2)
