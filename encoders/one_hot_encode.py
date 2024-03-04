@@ -9,14 +9,15 @@ def one_hot_encode_cdr3(cdr3_sequence):
             encoding[i, standard_protein_letters.index(amino_acid)] = 1
 
     return encoding
+def main():
+    standard_protein_letters = "IRQCYMLVAFNESHKWGDTP"
+    df = pd.read_csv('../vdjdb.csv', header=None)
+    cdr3=df[2].tolist()
+    cdr3.pop(0)
+    encode_output= []
+    for cdr3_sequence in cdr3:
+        encoded_cdr3 = one_hot_encode_cdr3(cdr3_sequence)
+        encode_output.append(encoded_cdr3)
 
-# Example usage
-standard_protein_letters = "IRQCYMLVAFNESHKWGDTP"
-# read csv
-df = pd.read_csv('../vdjdb.csv', header=None)
-cdr3=df[2].tolist()
-cdr3.pop(0)
-encode_output= []
-for cdr3_sequence in cdr3:
-    encoded_cdr3 = one_hot_encode_cdr3(cdr3_sequence)
-    encode_output.append(encoded_cdr3)
+if __name__ == "__main__":
+    main()

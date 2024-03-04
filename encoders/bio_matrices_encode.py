@@ -80,31 +80,34 @@ def encode_cdr3(seq,bio_matrix_name,maxlength):
         seq_embed = seq_embed[:maxlength]
     return seq_embed
 
-# read csv
-df = pd.read_csv('../vdjdb.csv', header=None)
-cdr3=df[2].tolist()
-epitope=df[9].tolist()
-# delete the first row('cdr3')
-cdr3.pop(0)
-epitope.pop(0)
-aa_idx = BLOSUM90()
-encode_output= []
-for i in cdr3:
-    print(encode_cdr3(i,aa_idx,20))
-    encode_output.append(encode_cdr3(i,aa_idx,20))
 
-# USE PCA to reduce the dimension of the data
-from sklearn.decomposition import PCA
-pca = PCA(n_components=2)
-flatten_output = []
-for i in encode_output:
-    flatten_output.append(np.array(i).flatten())
-pca_output = pca.fit_transform(flatten_output)
-# show with a plot
-import matplotlib.pyplot as plt
-plt.scatter(pca_output[:, 0], pca_output[:, 1])
-plt.show()
 
+def main():# read csv
+    df = pd.read_csv('../vdjdb.csv', header=None)
+    cdr3=df[2].tolist()
+    epitope=df[9].tolist()
+    # delete the first row('cdr3')
+    cdr3.pop(0)
+    epitope.pop(0)
+    aa_idx = BLOSUM90()
+    encode_output= []
+    for i in cdr3:
+        print(encode_cdr3(i,aa_idx,20))
+        encode_output.append(encode_cdr3(i,aa_idx,20))
+    # USE PCA to reduce the dimension of the data
+    from sklearn.decomposition import PCA
+    pca = PCA(n_components=2)
+    flatten_output = []
+    for i in encode_output:
+        flatten_output.append(np.array(i).flatten())
+    pca_output = pca.fit_transform(flatten_output)
+    # show with a plot
+    import matplotlib.pyplot as plt
+    plt.scatter(pca_output[:, 0], pca_output[:, 1])
+    plt.show()
+
+if __name__ == '__main__':
+    main()
 '''
 unique_epitopes = list(set(epitope))
 epitope_colors = {epi: i / len(unique_epitopes) for i, epi in enumerate(unique_epitopes)}
