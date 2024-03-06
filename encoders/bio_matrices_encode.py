@@ -62,6 +62,59 @@ def BLOSUM80():
 
     return aa_df
 
+def PAM250():
+    pam250 = substitution_matrices.load("PAM250")
+    amino_acids = sorted(set(k[0] for k in pam250.keys()).union(set(k[1] for k in pam250.keys())))
+
+    aa_df = pd.DataFrame(index=amino_acids, columns=amino_acids)
+    for (aa1, aa2), score in pam250.items():
+        aa_df.at[aa1, aa2] = score
+        aa_df.at[aa2, aa1] = score  # Ensure symmetry
+    standard_protein_letters = "IRQCYMLVAFNESHKWGDTP"
+    aa_df = aa_df.loc[list(standard_protein_letters), list(standard_protein_letters)]
+
+    # add NULL '-' with max loss (min value) & median for match
+    aa_df.loc['-', :] = aa_df.values.min()
+    aa_df.loc[:, '-'] = aa_df.values.min()
+    aa_df.loc['-', '-'] = np.median(aa_df.values.diagonal())
+
+    return aa_df
+
+def PAM30():
+    pam30 = substitution_matrices.load("PAM30")
+    amino_acids = sorted(set(k[0] for k in pam30.keys()).union(set(k[1] for k in pam30.keys())))
+
+    aa_df = pd.DataFrame(index=amino_acids, columns=amino_acids)
+    for (aa1, aa2), score in pam30.items():
+        aa_df.at[aa1, aa2] = score
+        aa_df.at[aa2, aa1] = score  # Ensure symmetry
+    standard_protein_letters = "IRQCYMLVAFNESHKWGDTP"
+    aa_df = aa_df.loc[list(standard_protein_letters), list(standard_protein_letters)]
+
+    # add NULL '-' with max loss (min value) & median for match
+    aa_df.loc['-', :] = aa_df.values.min()
+    aa_df.loc[:, '-'] = aa_df.values.min()
+    aa_df.loc['-', '-'] = np.median(aa_df.values.diagonal())
+
+    return aa_df
+
+def PAM70():
+    pam70 = substitution_matrices.load("PAM70")
+    amino_acids = sorted(set(k[0] for k in pam70.keys()).union(set(k[1] for k in pam70.keys())))
+
+    aa_df = pd.DataFrame(index=amino_acids, columns=amino_acids)
+    for (aa1, aa2), score in pam70.items():
+        aa_df.at[aa1, aa2] = score
+        aa_df.at[aa2, aa1] = score  # Ensure symmetry
+    standard_protein_letters = "IRQCYMLVAFNESHKWGDTP"
+    aa_df = aa_df.loc[list(standard_protein_letters), list(standard_protein_letters)]
+
+    # add NULL '-' with max loss (min value) & median for match
+    aa_df.loc['-', :] = aa_df.values.min()
+    aa_df.loc[:, '-'] = aa_df.values.min()
+    aa_df.loc['-', '-'] = np.median(aa_df.values.diagonal())
+
+    return aa_df
 
 def encode_cdr3(seq,bio_matrix_name,maxlength):
     if bio_matrix_name == 'BLOSUM90':
@@ -70,6 +123,12 @@ def encode_cdr3(seq,bio_matrix_name,maxlength):
         bio_matrix = BLOSUM62()
     elif bio_matrix_name == 'BLOSUM80':
         bio_matrix = BLOSUM80()
+    elif bio_matrix_name == 'PAM250':
+        bio_matrix = PAM250()
+    elif bio_matrix_name == 'PAM30':
+        bio_matrix = PAM30()
+    elif bio_matrix_name == 'PAM70':
+        bio_matrix = PAM70()
     else:
         raise ValueError('No such matrix')
     seq_embed = [bio_matrix[aa].tolist() for aa in seq]
