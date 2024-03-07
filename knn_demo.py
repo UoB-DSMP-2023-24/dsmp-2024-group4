@@ -13,11 +13,11 @@ epitope = df[9].tolist()
 cdr3.pop(0)
 epitope.pop(0)
 
-# encode_output = []
-# for i in cdr3:
-    # encode_output.append(one_hot_encode_cdr3(i,20))
+encode_output = []
+for i in cdr3:
+    encode_output.append(one_hot_encode_cdr3(i,20))
 
-encode_output= encode_cdr3_list(cdr3, 'BLOSUM62', 25)
+# encode_output= encode_cdr3_list(cdr3, 'BLOSUM62', 25)
 cdr3_flattened = [np.array(seq).flatten() for seq in encode_output]
 
 # split the data into training and testing sets
@@ -37,12 +37,32 @@ print("Accuracy:", accuracy)
 # I believe we can consider these results as a baseline.
 
 '''
+# test different n_neighbors
+n_neighbors = range(5, 101, 5)
+accuracies = []
+for n in n_neighbors:
+    knn = KNeighborsClassifier(n_neighbors=n)
+    knn.fit(X_train, y_train)
+    y_pred = knn.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    accuracies.append(accuracy)
+    print("Accuracy:", accuracy)
+import matplotlib.pyplot as plt
+plt.plot(n_neighbors, accuracies)
+plt.axvline(n_neighbors[accuracies.index(max(accuracies))], color='r', linestyle='--')
+plt.text(n_neighbors[accuracies.index(max(accuracies))], max(accuracies), f'n_neighbors={n_neighbors[accuracies.index(max(accuracies))]}', ha='left')
+plt.xlabel('Number of Neighbors')
+plt.ylabel('Accuracy')
+plt.savefig('knn_accuracy_n_neighbors.png')
+'''
+'''
+# test different matrices
 matrices_list = ['BENNER22', 'BENNER6', 'BENNER74', 'BLASTP', 'BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 
                  'BLOSUM90', 'DAYHOFF', 'FENG', 'GENETIC', 'GONNET1992', 'JOHNSON', 'JONES', 'LEVIN', 'MCLACHLAN', 
                  'MDM78', 'PAM250', 'PAM30', 'PAM70', 'RAO', 'RISLER', 'STR']
 accuracies=[]
 if len(accuracies) != len(matrices_list):
-    # 用0填充不足的accuracies
+    # use '0' to pad the list
     accuracies = accuracies + [0] * (len(matrices_list) - len(accuracies))
 for i in range(len(matrices_list)):
     if accuracies[i]!=0:
@@ -68,11 +88,11 @@ for i in range(len(matrices_list)):
     accuracies[i] = accuracy
 
 import matplotlib.pyplot as plt
-# 绘制条形图，轴范围为0.4到0.6，在条上显示数值
 plt.barh(matrices_list, accuracies)
-plt.xlim(0.4, 0.450)
+plt.xlim(0.41, 0.445)
 for x, y in zip(accuracies, matrices_list):
     plt.text(x, y, '%.3f' % x, ha='left', va='center')
+plt.subplots_adjust(left=0.3) # make room for the labels
 plt.savefig('knn_accuracy.png')
 '''
 
@@ -87,4 +107,17 @@ accuracies = [0.4291565615736998,0.4279170035030989,0.42840204796550796,0.433845
               0.4322824036647804,0.43627054702236595,0.4294799245486392,0.43249797898140663,0.42813257881972516,
               0.42910266774454325,0.4337914308811641,0.4279170035030989,0.4275936405281595,0.436755591484775,
               0.4347615198059822,0.43179735920237133,0.4194556723255187,0.4330369172729722,0.4390191323093506]
+'''
+'''
+n_neighbors = range(5, 101, 5)
+accuracies=[0.40722177310697927, 0.43416868768526, 
+            0.44058205335489087, 0.4390191323093506, 
+            0.4365939099973053, 0.43443815683104287, 
+            0.4315817838857451, 0.4289948800862301, 
+            0.42780921584478576, 0.42522231204527083, 
+            0.42506063055780113, 0.42279708973322555, 
+            0.421018593371059, 0.41880894637564, 
+            0.4159525734303422, 0.4155753166262463, 
+            0.4129345189975748, 0.411802748585287, 
+            0.41072487200215574, 0.4099703583939639]
 '''
