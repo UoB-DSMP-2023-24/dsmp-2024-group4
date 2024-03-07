@@ -7,4 +7,4 @@ This folder contains various encoding methods we have experimented with for enco
 - File: encoders/one_hot_encode.py
 - This script encodes CDR3 sequences using one-hot encoding. In this method, each amino acid in the CDR3 sequence is represented as a binary vector. The length of the vector is equal to the number of unique amino acids in the sequence. The vector contains all zeros except for the position corresponding to the amino acid, which is set to 1.
 ## Comparing
-![Comparison](../knn_accuracy.png)
+![Comparison](knn_accuracy.png)
