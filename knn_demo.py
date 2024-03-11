@@ -13,6 +13,7 @@ epitope = df[9].tolist()
 cdr3.pop(0)
 epitope.pop(0)
 
+
 encode_output = []
 for i in cdr3:
     encode_output.append(one_hot_encode_cdr3(i,20))
@@ -78,7 +79,7 @@ for i in range(len(matrices_list)):
     X_train, X_test, y_train, y_test = train_test_split(cdr3_flattened, epitope, test_size=0.2, random_state=42)
 
     # create a KNN classifier
-    knn = KNeighborsClassifier(n_neighbors=20)
+    knn = KNeighborsClassifier(n_neighbors=15)
 
     knn.fit(X_train, y_train)
 
@@ -86,16 +87,30 @@ for i in range(len(matrices_list)):
     accuracy = accuracy_score(y_test, y_pred)
     print("Accuracy:", accuracy)
     accuracies[i] = accuracy
+# one hot
+encode_output = []
+for i in cdr3:
+    encode_output.append(one_hot_encode_cdr3(i,25))
+cdr3_flattened = [np.array(seq).flatten() for seq in encode_output]
+X_train, X_test, y_train, y_test = train_test_split(cdr3_flattened, epitope, test_size=0.2, random_state=42)
+knn = KNeighborsClassifier(n_neighbors=15)
+knn.fit(X_train, y_train)
+y_pred = knn.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+accuracies.append(accuracy)
+matrices_list.append('One hot')
 
 import matplotlib.pyplot as plt
+accuracies, matrices_list = zip(*sorted(zip(accuracies, matrices_list)))
 plt.barh(matrices_list, accuracies)
 plt.xlim(0.41, 0.445)
 for x, y in zip(accuracies, matrices_list):
     plt.text(x, y, '%.3f' % x, ha='left', va='center')
 plt.subplots_adjust(left=0.3) # make room for the labels
 plt.savefig('knn_accuracy.png')
-'''
 
+'''
 
 
 
