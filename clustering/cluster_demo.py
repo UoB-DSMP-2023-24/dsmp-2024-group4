@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 
-df = pd.read_csv('vdjdb.csv', header=None)
+df = pd.read_csv('../vdjdb.csv', header=None)
 cdr3=df[2].tolist()
 epitope=df[9].tolist()
 # delete the first row('cdr3')
