@@ -8,7 +8,7 @@ def split_cdr3(cdr3_sequence):
     return list(cdr3_sequence)
 
 df = pd.read_csv('../vdjdb.csv')
-df=sampler(df, n_samples=10000, n_epitopes=10)
+# df=sampler(df, n_samples=10000, n_epitopes=10)
 df=df[['cdr3','antigen.epitope']]
 split_sequences = df['cdr3'].apply(split_cdr3)
 
@@ -21,7 +21,7 @@ y=df['antigen.epitope']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 
-rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_classifier = RandomForestClassifier(n_estimators=80, random_state=42)
 
 
 rf_classifier.fit(X_train, y_train)

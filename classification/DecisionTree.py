@@ -9,7 +9,7 @@ def split_cdr3(cdr3_sequence):
     return list(cdr3_sequence)
 
 df = pd.read_csv('../vdjdb.csv')
-df = sampler(df, n_samples=30000, n_epitopes=500)
+# df = sampler(df, n_samples=30000, n_epitopes=500)
 df = df[['cdr3', 'antigen.epitope']]
 split_sequences = df['cdr3'].apply(split_cdr3)
 
