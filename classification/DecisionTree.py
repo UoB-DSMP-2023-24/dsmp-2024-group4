@@ -2,7 +2,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier,plot_tree
 from sklearn.metrics import classification_report
 import pandas as pd
-from tcr_sampler import sampler
+from tcr_sampler import sampler,remove_imbalance,transform_imbalance
 import matplotlib.pyplot as plt
 
 def split_cdr3(cdr3_sequence):
@@ -10,6 +10,8 @@ def split_cdr3(cdr3_sequence):
 
 df = pd.read_csv('../vdjdb.csv')
 # df = sampler(df, n_samples=30000, n_epitopes=500)
+# df=remove_imbalance(df,threshold=10)
+# df=transform_imbalance(df,threshold=10)
 df = df[['cdr3', 'antigen.epitope']]
 split_sequences = df['cdr3'].apply(split_cdr3)
 
