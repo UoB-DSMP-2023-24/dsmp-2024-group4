@@ -1,3 +1,7 @@
+
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from encoders.ordinal_encode import seqs2mat
 from tcr_sampler import sampler
 from CDR3distance import distance_cal,dist_to_matrix
@@ -5,7 +9,7 @@ from sklearn.cluster import AgglomerativeClustering
 import pandas as pd
 import itertools
 
-df = pd.read_csv('../vdjdb.csv')
+df = pd.read_csv('vdjdb.csv')
 df=sampler(df, n_samples=2000, n_epitopes=5)
 # head = None
 

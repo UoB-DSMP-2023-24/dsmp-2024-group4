@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
@@ -7,7 +11,7 @@ from tcr_sampler import sampler,remove_imbalance,transform_imbalance
 def split_cdr3(cdr3_sequence):
     return list(cdr3_sequence)
 
-df = pd.read_csv('../vdjdb.csv')
+df = pd.read_csv('vdjdb.csv')
 # df=sampler(df, n_samples=10000, n_epitopes=10)
 df=remove_imbalance(df,threshold=10)
 # df=transform_imbalance(df,threshold=10)

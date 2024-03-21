@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier,plot_tree
 from sklearn.metrics import classification_report
@@ -5,12 +9,13 @@ import pandas as pd
 from tcr_sampler import sampler,remove_imbalance,transform_imbalance
 import matplotlib.pyplot as plt
 
+
 def split_cdr3(cdr3_sequence):
     return list(cdr3_sequence)
 
-df = pd.read_csv('../vdjdb.csv')
+df = pd.read_csv('vdjdb.csv')
 # df = sampler(df, n_samples=30000, n_epitopes=500)
-# df=remove_imbalance(df,threshold=10)
+df=remove_imbalance(df,threshold=10)
 # df=transform_imbalance(df,threshold=10)
 df = df[['cdr3', 'antigen.epitope']]
 split_sequences = df['cdr3'].apply(split_cdr3)
@@ -23,14 +28,15 @@ X = split_df
 y = df['antigen.epitope']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-dt_classifier = DecisionTreeClassifier(random_state=42)
+# 多次实验求平均
+accuracy = []
+for i in range(20):
+    dt_classifier = DecisionTreeClassifier(random_state=42)
+    dt_classifier.fit(X_train, y_train)
+    y_pred = dt_classifier.predict(X_test)
+    accuracy.append(dt_classifier.score(X_test, y_test))
 
-dt_classifier.fit(X_train, y_train)
-
-y_pred = dt_classifier.predict(X_test)
-
-print(classification_report(y_test, y_pred))
-
+print('Average accuracy: ', sum(accuracy) / len(accuracy)) # 0.3799687941154619
 '''
 plot_tree(dt_classifier, filled=True)
 plt.savefig('decision_tree.png')
