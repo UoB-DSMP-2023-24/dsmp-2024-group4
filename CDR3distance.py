@@ -5,8 +5,19 @@ import pandas as pd
 import numba as nb
 from encoders.ordinal_encode import seqs2mat
 
+'''
+ctrim - number of amino acids to trim of c-terminal end of a CDR. (i.e. ctrim = 3 CASSQDFEQ-YF consider only positions after CAS-SQDFEQ-YF)
+ntrim - number of amino acids to trim of n-terminal end of a CDR. (i.e. ntrim = 2 CASSQDFEQ-YF consider only positions before “YF”, SQDFEQ-YF)
+gap_penalty - the penalty accrued for gaps in the pairwise alignment.
+‘fixed_gappos’ - When sequences are of different length, there will be a gap position. If ‘fixed_gappos’ is False, then the metric inserts a single gap at an optimal position based on a BLOSUM62 scoring matrix. This is recommended for the CDR3, but it is not necessary when the CDR1, 2, and 2.5 are already imgt_aligned and of a fixed length.
+'''
 
-def distance_cal(seq_list,length_list,alphabet='IRQCYMLVAFNESHKWGDTP'):
+class TCR:
+    def __init__(self, cdr3_alpha, cdr3_beta=None, epitope=None,weight=None):
+        self.cdr3_alpha = cdr3_alpha
+        self.cdr3_beta = cdr3_beta
+        self.epitope = epitope
+def distance_cal(TCRs,alphabet='IRQCYMLVAFNESHKWGDTP'):
     tcr_dict_distance_matrix = {('A', 'A'): 0, ('A', 'C'): 4, ('A', 'D'): 4, ('A', 'E'): 4, ('A', 'F'): 4,
                                 ('A', 'G'): 4, ('A', 'H'): 4, ('A', 'I'): 4, ('A', 'K'): 4, ('A', 'L'): 4,
                                 ('A', 'M'): 4, ('A', 'N'): 4, ('A', 'P'): 4, ('A', 'Q'): 4, ('A', 'R'): 4,
@@ -87,15 +98,23 @@ def distance_cal(seq_list,length_list,alphabet='IRQCYMLVAFNESHKWGDTP'):
                                 ('Y', 'G'): 4, ('Y', 'H'): 2, ('Y', 'I'): 4, ('Y', 'K'): 4, ('Y', 'L'): 4,
                                 ('Y', 'M'): 4, ('Y', 'N'): 4, ('Y', 'P'): 4, ('Y', 'Q'): 4, ('Y', 'R'): 4,
                                 ('Y', 'S'): 4, ('Y', 'T'): 4, ('Y', 'V'): 4, ('Y', 'W'): 2, ('Y', 'Y'): 0}
-    indices = list(itertools.combinations(range(len(seq_list)), 2))
+    indices = list(itertools.combinations(range(len(TCRs)), 2))
     dm = np.zeros((len(alphabet), len(alphabet)), dtype=np.int32)
     for (aa1, aa2), d in tcr_dict_distance_matrix.items():
         dm[alphabet.index(aa1), alphabet.index(aa2)] = d
         dm[alphabet.index(aa2), alphabet.index(aa1)] = d
     indices = np.array(indices, dtype=np.int64)
-    dist = _distance_cal(indices, seq_list, length_list, dm, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2,
-                         fixed_gappos=True)
-    return dist,indices
+    cdr3_alpha = [tcr.cdr3_alpha for tcr in TCRs]
+    seqs_mat, seqs_L = seqs2mat(cdr3_alpha)
+    dist_alpha = _distance_cal(indices, seqs_mat, seqs_L, dm, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2,
+                               fixed_gappos=True)
+    if TCRs[1].cdr3_beta is not None:
+        cdr3_beta = [tcr.cdr3_beta for tcr in TCRs]
+        seqs_mat, seqs_L = seqs2mat(cdr3_beta)
+        dist_beta = _distance_cal(indices, seqs_mat, seqs_L, dm, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2,
+                                  fixed_gappos=True)
+        dist_alpha=dist_alpha+dist_beta
+    return dist_alpha,indices
 def _distance_cal(indices, seqs_mat, seqs_L, distance_matrix, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2, fixed_gappos=True):
     """
     indices : np.ndarray [nseqs, 2]
@@ -122,8 +141,6 @@ def _distance_cal(indices, seqs_mat, seqs_L, distance_matrix, dist_weight=3, gap
         If False, find the "optimal" position for inserting the gaps to make up the difference in length
     """
 
-    assert seqs_mat.shape[0] == seqs_L.shape[0]
-
     dist = np.zeros(indices.shape[0], dtype=np.int16)
     for ind_i in nb.prange(indices.shape[0]):
         query_i = indices[ind_i, 0]
@@ -149,6 +166,9 @@ def _distance_cal(indices, seqs_mat, seqs_L, distance_matrix, dist_weight=3, gap
                 max_gappos += 1
         min_dist = -1
         # min_count = -1
+        # A "gap" is a blank position introduced when comparing two or more biological sequences (e.g. DNA, RNA or protein sequences) in order to maximise alignment and similarity between sequences.
+        # When sequences are not of the same length, the similarity of two sequences can be compared more accurately by introducing gaps in the shorter sequence. The gappos variable in the function seems to be used to determine the best place to introduce gaps in the sequences.
+
         for gappos in range(min_gappos, max_gappos + 1):
             tmp_dist = 0
             # tmp_count = 0
@@ -164,6 +184,7 @@ def _distance_cal(indices, seqs_mat, seqs_L, distance_matrix, dist_weight=3, gap
                 tmp_dist += distance_matrix[seqs_mat[query_i, q_L - 1 - c_i], seqs_mat[seq_i, s_L - 1 - c_i]]
                 # tmp_count += 1
             #print('sequence_distance_with_gappos2:', gappos, remainder, dist[seq_i])
+            # Find the gap position that minimises the distance
             if tmp_dist < min_dist or min_dist == -1:
                 min_dist = tmp_dist
                 # min_count = tmp_count
@@ -185,16 +206,22 @@ def dist_to_matrix(dist, indices, nseqs):
 def main():
 
     # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
-    df = pd.read_csv('vdjdb.csv', header=None)
-    cdr3=df[2].tolist()
-    epitope=df[9].tolist()
-    cdr3.pop(0)
-    epitope.pop(0)
-    cdr3 = cdr3[:1000]
-    epitope = epitope[:1000]
-    seqs_mat, seqs_L = seqs2mat(cdr3) # seqs_mat is a matrix of the sequences, seqs_L is a vector of the lengths of the sequences
+    df = pd.read_csv('cdr3_alpha_beta.csv', header=None)
+    # complex.id,cdr3_alpha,v.segm_alpha,j.segm_alpha,cdr3_beta,v.segm_beta,j.segm_beta,species,mhc.a,mhc.b,mhc.class,antigen.epitope,vdjdb.score
+    cdr3_alpha = df[1].tolist()
+    cdr3_beta = df[4].tolist()
+    epitope = df[11].tolist()
 
-    print(distance_cal(seqs_mat,seqs_L))
+    cdr3_alpha.pop(0)
+    cdr3_beta.pop(0)
+    epitope.pop(0)
+    cdr3_alpha = cdr3_alpha[:1000]
+    cdr3_beta = cdr3_beta[:1000]
+    epitope = epitope[:1000]
+    TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], epitope[i]) for i in range(len(cdr3_alpha))]
+    dist, indices = distance_cal(TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, len(cdr3_alpha))
+    print(dist_matrix)
 
 if __name__ == "__main__":
     main()
