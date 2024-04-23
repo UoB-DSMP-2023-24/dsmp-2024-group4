@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
+from tcr_sampler import remove_imbalance
 
-df=pd.read_csv('vdjdb.csv')
+df=pd.read_csv('cdr3_alpha_beta_without_0score.csv')
 
+df=remove_imbalance(df,threshold=10)
 epitope_num=df['antigen.epitope'].value_counts()
 import matplotlib.pyplot as plt
 plt.figure(figsize=(12, 6))

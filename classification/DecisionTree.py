@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 def split_cdr3(cdr3_sequence):
     return list(cdr3_sequence)
 
-df = pd.read_csv('vdjdb.csv')
+df = pd.read_csv('../vdjdb.csv')
 # df = sampler(df, n_samples=30000, n_epitopes=500)
 df=remove_imbalance(df,threshold=10)
 # df=transform_imbalance(df,threshold=10)
@@ -30,13 +30,25 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 
 # 多次实验求平均
 accuracy = []
-for i in range(20):
-    dt_classifier = DecisionTreeClassifier(random_state=42)
+# max_depths= [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+# min_samples_splits = [2, 4, 6, 8, 10]
+
+for i in range(10):
+    dt_classifier = DecisionTreeClassifier(class_weight='balanced')
     dt_classifier.fit(X_train, y_train)
     y_pred = dt_classifier.predict(X_test)
     accuracy.append(dt_classifier.score(X_test, y_test))
+print('mean accuracy:', sum(accuracy) / len(accuracy))
 
-print('Average accuracy: ', sum(accuracy) / len(accuracy)) # 0.3799687941154619
+
+
+# entropy 0.3808139534883722 gini 0.3810368526636452
+# class_weight='balanced' 0.3303737276172078
+# When dealing with unbalanced datasets, 'balanced' weights increase the relative importance of less common categories.
+# This may cause the model to focus more on these minority categories and thus may make more errors on majority categories, especially if these majority categories dominate the dataset.
+# In addition, the metric of accuracy may not always capture the effects of category imbalance.
+
+
 '''
 plot_tree(dt_classifier, filled=True)
 plt.savefig('decision_tree.png')

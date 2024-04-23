@@ -4,6 +4,7 @@ from Bio.Align import substitution_matrices
 import pandas as pd
 import numba as nb
 from encoders.ordinal_encode import seqs2mat
+from tqdm import tqdm
 
 '''
 ctrim - number of amino acids to trim of c-terminal end of a CDR. (i.e. ctrim = 3 CASSQDFEQ-YF consider only positions after CAS-SQDFEQ-YF)
@@ -13,9 +14,15 @@ gap_penalty - the penalty accrued for gaps in the pairwise alignment.
 '''
 
 class TCR:
-    def __init__(self, cdr3_alpha, cdr3_beta=None, epitope=None,weight=None):
+    def __init__(self, cdr3_alpha, cdr3_beta=None,v_segm_alpha=None,v_segm_beta=None,j_segm_alpha=None,j_segm_beta=None,mhc_a=None,mhc_b=None, epitope=None,weight=None):
         self.cdr3_alpha = cdr3_alpha
         self.cdr3_beta = cdr3_beta
+        self.v_segm_alpha=v_segm_alpha
+        self.v_segm_beta=v_segm_beta
+        self.j_segm_alpha=j_segm_alpha
+        self.j_segm_beta=j_segm_beta
+        self.mhc_a = mhc_a
+        self.mhc_b = mhc_b
         self.epitope = epitope
 def distance_cal(TCRs,alphabet='IRQCYMLVAFNESHKWGDTP'):
     tcr_dict_distance_matrix = {('A', 'A'): 0, ('A', 'C'): 4, ('A', 'D'): 4, ('A', 'E'): 4, ('A', 'F'): 4,
@@ -104,17 +111,53 @@ def distance_cal(TCRs,alphabet='IRQCYMLVAFNESHKWGDTP'):
         dm[alphabet.index(aa1), alphabet.index(aa2)] = d
         dm[alphabet.index(aa2), alphabet.index(aa1)] = d
     indices = np.array(indices, dtype=np.int64)
-    cdr3_alpha = [tcr.cdr3_alpha for tcr in TCRs]
-    seqs_mat, seqs_L = seqs2mat(cdr3_alpha)
-    dist_alpha = _distance_cal(indices, seqs_mat, seqs_L, dm, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2,
-                               fixed_gappos=True)
-    if TCRs[1].cdr3_beta is not None:
+    distance=np.zeros(indices.shape[0], dtype=np.int16)
+    if TCRs[0].cdr3_alpha is not None:
+        cdr3_alpha = [tcr.cdr3_alpha for tcr in TCRs]
+        seqs_mat, seqs_L = seqs2mat(cdr3_alpha)
+        dist_alpha = _distance_cal(indices, seqs_mat, seqs_L, dm, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2,
+                                   fixed_gappos=True)
+        distance=distance+dist_alpha
+    if TCRs[0].cdr3_beta is not None:
         cdr3_beta = [tcr.cdr3_beta for tcr in TCRs]
         seqs_mat, seqs_L = seqs2mat(cdr3_beta)
         dist_beta = _distance_cal(indices, seqs_mat, seqs_L, dm, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2,
                                   fixed_gappos=True)
-        dist_alpha=dist_alpha+dist_beta
-    return dist_alpha,indices
+        distance=distance+dist_beta
+    if TCRs[0].v_segm_alpha is not None:
+        v_segm_alpha = [tcr.v_segm_alpha for tcr in TCRs]
+        dist_vsegm_alpha = distance_categorical(v_segm_alpha, 3)
+        distance = distance + dist_vsegm_alpha
+    if TCRs[0].v_segm_beta is not None:
+        v_segm_beta = [tcr.v_segm_beta for tcr in TCRs]
+        dist_vsegm_beta = distance_categorical(v_segm_beta, 3)
+        distance = distance + dist_vsegm_beta
+    if TCRs[0].j_segm_alpha is not None:
+        j_segm_alpha = [tcr.j_segm_alpha for tcr in TCRs]
+        dist_jsegm_alpha = distance_categorical(j_segm_alpha, 3)
+        distance = distance + dist_jsegm_alpha
+    if TCRs[0].j_segm_beta is not None:
+        j_segm_beta = [tcr.j_segm_beta for tcr in TCRs]
+        dist_jsegm_beta = distance_categorical(j_segm_beta, 3)
+        distance = distance + dist_jsegm_beta
+    if TCRs[0].mhc_a is not None:
+        mhc_a = [tcr.mhc_a for tcr in TCRs]
+        dist_mhc_a = distance_categorical(mhc_a, 3)
+        distance = distance + dist_mhc_a
+    if TCRs[0].mhc_b is not None:
+        mhc_b = [tcr.mhc_b for tcr in TCRs]
+        dist_mhc_b = distance_categorical(mhc_b, 3)
+        distance = distance + dist_mhc_b
+
+
+    return distance,indices
+
+def distance_categorical(TCRs,weight):
+    indices = list(itertools.combinations(range(len(TCRs)), 2))
+    dist = np.zeros(len(indices), dtype=np.int16)
+    for i, (i1, i2) in enumerate(indices):
+        dist[i] = weight * (TCRs[i1]!= TCRs[i2])
+    return dist
 def _distance_cal(indices, seqs_mat, seqs_L, distance_matrix, dist_weight=3, gap_penalty=4, ntrim=3, ctrim=2, fixed_gappos=True):
     """
     indices : np.ndarray [nseqs, 2]
@@ -142,7 +185,7 @@ def _distance_cal(indices, seqs_mat, seqs_L, distance_matrix, dist_weight=3, gap
     """
 
     dist = np.zeros(indices.shape[0], dtype=np.int16)
-    for ind_i in nb.prange(indices.shape[0]):
+    for ind_i in tqdm(nb.prange(indices.shape[0])):
         query_i = indices[ind_i, 0]
         seq_i = indices[ind_i, 1]
         q_L = seqs_L[query_i]
@@ -205,22 +248,40 @@ def dist_to_matrix(dist, indices, nseqs):
 
 def main():
 
+    df = pd.read_csv('cdr3_alpha_beta.csv')
+    # head = None
     # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
-    df = pd.read_csv('cdr3_alpha_beta.csv', header=None)
     # complex.id,cdr3_alpha,v.segm_alpha,j.segm_alpha,cdr3_beta,v.segm_beta,j.segm_beta,species,mhc.a,mhc.b,mhc.class,antigen.epitope,vdjdb.score
-    cdr3_alpha = df[1].tolist()
-    cdr3_beta = df[4].tolist()
-    epitope = df[11].tolist()
+    cdr3_alpha = df['cdr3_alpha'].tolist()
+    cdr3_beta = df['cdr3_beta'].tolist()
+    v_segm_alpha = df['v.segm_alpha'].tolist()
+    v_segm_beta = df['v.segm_beta'].tolist()
+    j_segm_alpha = df['j.segm_alpha'].tolist()
+    j_segm_beta = df['j.segm_beta'].tolist()
+    mhc_a = df['mhc.a'].tolist()
+    mhc_b = df['mhc.b'].tolist()
+    epitope = df['antigen.epitope'].tolist()
+    n_epitopes = len(set(epitope))
 
-    cdr3_alpha.pop(0)
-    cdr3_beta.pop(0)
-    epitope.pop(0)
-    cdr3_alpha = cdr3_alpha[:1000]
-    cdr3_beta = cdr3_beta[:1000]
-    epitope = epitope[:1000]
-    TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], epitope[i]) for i in range(len(cdr3_alpha))]
+    # select 10 TCRs
+    num_tcrs = 10
+
+    # combine alpha and beta chain
+    TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(num_tcrs)]
     dist, indices = distance_cal(TCRs)
-    dist_matrix = dist_to_matrix(dist, indices, len(cdr3_alpha))
+    dist_matrix = dist_to_matrix(dist, indices, num_tcrs)
+    print(dist_matrix)
+
+    # only alpha chain
+    TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], mhc_b[i], epitope[i]) for i in range(num_tcrs)]
+    dist, indices = distance_cal(TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, num_tcrs)
+    print(dist_matrix)
+
+    # only beta chain
+    TCRs = [TCR(None, cdr3_beta[i], None, v_segm_beta[i], None, j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(num_tcrs)]
+    dist, indices = distance_cal(TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, num_tcrs)
     print(dist_matrix)
 
 if __name__ == "__main__":

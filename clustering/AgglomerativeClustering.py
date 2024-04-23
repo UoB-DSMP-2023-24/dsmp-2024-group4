@@ -3,14 +3,16 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from encoders.ordinal_encode import seqs2mat
-from tcr_sampler import sampler
-from CDR3distance import distance_cal,dist_to_matrix
+from tcr_sampler import sampler,remove_imbalance,transform_imbalance
+from TCRs_distance import distance_cal,dist_to_matrix
 from sklearn.cluster import AgglomerativeClustering
 import pandas as pd
 import itertools
 
-df = pd.read_csv('vdjdb.csv')
-df=sampler(df, n_samples=2000, n_epitopes=5)
+df = pd.read_csv('../vdjdb.csv')
+df = remove_imbalance(df,threshold=10)
+num_cluster=50
+df=sampler(df, n_samples=20000, n_epitopes=num_cluster)
 # head = None
 
 cdr3=df['cdr3'].tolist()
@@ -19,7 +21,7 @@ seqs_mat, seqs_L = seqs2mat(cdr3) # seqs_mat is a matrix of the sequences, seqs_
 dist,indices = distance_cal(seqs_mat, seqs_L)
 dist_matrix=dist_to_matrix(dist, indices,len(cdr3))
 epitope_num=len(set(epitope))
-cluster=AgglomerativeClustering(n_clusters=5,affinity='precomputed', linkage='complete')
+cluster=AgglomerativeClustering(n_clusters=num_cluster,affinity='precomputed', linkage='complete')
 cluster.fit(dist_matrix)
 from sklearn.metrics import adjusted_rand_score,silhouette_score
 print(adjusted_rand_score(epitope, cluster.labels_))
