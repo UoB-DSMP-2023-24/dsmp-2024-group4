@@ -1,2 +1,0 @@
-##TIME:2024-04-22 07:44:45|cmd: GIANA4.py|./vdjdb_cleaned.csv|IsometricDistance_Thr=7.0|thr_v=3.7|thr_s=3.5|exact=True|Vgene=True|ST=3
-##Column Info: CDR3 aa sequence, cluster id, other information in the input file
