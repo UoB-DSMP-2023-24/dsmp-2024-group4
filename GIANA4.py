@@ -894,12 +894,13 @@ def EncodeRepertoire(inputfile, outdir, outfile='',exact=True, ST=3, thr_v=3.7, 
                 line=vss[ii]+'\t'+vInfo[ii][0]+'\t'
                 NUMs=[str(xx) for xx in dM[ii,:]]
                 line += '\t'.join(NUMs) + '\n'
-                h.write(line)
+                h.write(line) # save encoding matrix like "[CDR3 sqeuence] [cluster id] [encoding vector]"
         sID=[x for x in range(dM.shape[0])]
         t2=time.time()
         if verbose:
             print(' Done! Total time elapsed %f' %(t2-t1))
         Cls = ClusterCDR3(dM, flagL, thr=thr_iso - 0.5*(15-kk), verbose=verbose)  ## change cutoff with different lengths
+        # the rest of the code is to handle identical CDR3 groups, V gene matching and SW alignment. The main function is ClusterCDR3.
         Cls = MergeCL(Cls)
         if verbose:
             print("     Handling identical CDR3 groups")
@@ -1082,7 +1083,7 @@ def ClusterCDR3(dM, flagL, thr=10, GPU=False, verbose=False):
     ## flagL: flag vector for identical CDR3 groups, >0 for grouped non-identical CDR3s
     Cls=[]
     flag=0
-    dM1=dM
+    dM1=dM # dM is not distance matrix, but the input data matrix(encoded CDR3 sequences)
     flagL=np.array(flagL)
     if GPU:
         res = faiss.StandardGpuResources()
@@ -1090,7 +1091,7 @@ def ClusterCDR3(dM, flagL, thr=10, GPU=False, verbose=False):
 #        print("     %d number of clusters, with %d sequences" %(len(Cls),dM1.shape[0]))
         if verbose:
             print('=',end='')
-        index = faiss.IndexFlatL2(Ndim*6)
+        index = faiss.IndexFlatL2(Ndim*6) # calculate L2 distance between vectors here
         if GPU:
             index = faiss.index_cpu_to_gpu(res, 0, index)
         index.add(dM1)

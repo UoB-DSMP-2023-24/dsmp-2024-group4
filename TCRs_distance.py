@@ -5,6 +5,7 @@ import pandas as pd
 import numba as nb
 from encoders.ordinal_encode import seqs2mat
 from tqdm import tqdm
+from tcrdist.repertoire import TCRrep
 
 '''
 ctrim - number of amino acids to trim of c-terminal end of a CDR. (i.e. ctrim = 3 CASSQDFEQ-YF consider only positions after CAS-SQDFEQ-YF)
@@ -24,6 +25,15 @@ class TCR:
         self.mhc_a = mhc_a
         self.mhc_b = mhc_b
         self.epitope = epitope
+
+
+def matrix_position(size, i, j):
+    small = min(i, j)+1
+    big = max(i, j)+1
+    if small == 1:
+        return int(big-2)
+    return int(size * (small-1) - small * (small - 1) / 2 + big - small - 1)
+
 def distance_cal(TCRs,alphabet='IRQCYMLVAFNESHKWGDTP'):
     tcr_dict_distance_matrix = {('A', 'A'): 0, ('A', 'C'): 4, ('A', 'D'): 4, ('A', 'E'): 4, ('A', 'F'): 4,
                                 ('A', 'G'): 4, ('A', 'H'): 4, ('A', 'I'): 4, ('A', 'K'): 4, ('A', 'L'): 4,
@@ -248,7 +258,7 @@ def dist_to_matrix(dist, indices, nseqs):
 
 def main():
 
-    df = pd.read_csv('cdr3_alpha_beta.csv')
+    df = pd.read_csv('cdr3_alpha_beta_without_0score.csv')
     # head = None
     # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
     # complex.id,cdr3_alpha,v.segm_alpha,j.segm_alpha,cdr3_beta,v.segm_beta,j.segm_beta,species,mhc.a,mhc.b,mhc.class,antigen.epitope,vdjdb.score
