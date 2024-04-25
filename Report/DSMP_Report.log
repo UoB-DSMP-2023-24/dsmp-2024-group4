@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.21)  24 APR 2024 17:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.21)  25 APR 2024 14:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -285,6 +285,18 @@ LaTeX Warning: Label `AA' multiply defined.
 
 LaTeX Warning: Label `AA' multiply defined.
 
+
+LaTeX Warning: Label `AA' multiply defined.
+
+
+LaTeX Warning: Label `AA' multiply defined.
+
+
+LaTeX Warning: Label `AA' multiply defined.
+
+
+LaTeX Warning: Label `AA' multiply defined.
+
 )
 \openout1 = `DSMP_Report.aux'.
 
@@ -342,29 +354,30 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 024/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
-]
-Underfull \hbox (badness 1960) in paragraph at lines 147--148
+] [2]
+Underfull \hbox (badness 1960) in paragraph at lines 178--179
 []\OT1/ptm/m/n/10 Prediction: The test sam-ple is tra-versed along the
  []
 
-[2]
+[3]
 LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 2
-40.
+71.
  (c:/texlive/2024/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 240.
- [3]
-Underfull \hbox (badness 10000) in paragraph at lines 261--262
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 271.
+
+Underfull \hbox (badness 10000) in paragraph at lines 292--293
 []\OT1/ptm/m/n/10 Data merg-ing: cdr3[]alpha[]df and cdr3[]beta[]df
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 261--262
+Underfull \hbox (badness 10000) in paragraph at lines 292--293
 \OT1/ptm/m/n/10 were com-bined ac-cord-ing to the columns
  []
 
+[4]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -376,7 +389,9 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[4] (./DSMP_Report.aux)
+[5
+
+] (./DSMP_Report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
@@ -387,10 +402,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4238 strings out of 474104
- 65637 string characters out of 5747502
+ 4240 strings out of 474104
+ 65695 string characters out of 5747502
  1947496 words of memory out of 5000000
- 26564 multiletter control sequences out of 15000+600000
+ 26566 multiletter control sequences out of 15000+600000
  605938 words of font info for 132 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,65p,747b,334s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -406,10 +421,10 @@ ive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2024/texmf-dis
 t/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on DSMP_Report.pdf (4 pages, 161359 bytes).
+Output written on DSMP_Report.pdf (5 pages, 168724 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 86 PDF objects out of 1000 (max. 8388607)
+ 52 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

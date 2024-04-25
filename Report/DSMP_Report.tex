@@ -23,28 +23,28 @@
 	\makeatother
 	
 	\author{\IEEEauthorblockN{1\textsuperscript{st} SHALOMI FERNANDES}
-		\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-			\textit{name of organization (of Aff.)}\\
-			City, Country \\
+		\IEEEauthorblockA{\textit{Faculty of Engineering } \\
+			\textit
+			Bristol, UK \\
 			email address or ORCID}
 		\and
 		\IEEEauthorblockN{2\textsuperscript{nd} FANGNAN WEI}
-		\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-			\textit{name of organization (of Aff.)}\\
-			City, Country \\
+		\IEEEauthorblockA{\textit{Faculty of Engineering } \\
+			\textit
+			Bristol, UK \\
 			email address or ORCID}
 		\linebreakand %
 		\IEEEauthorblockN{3\textsuperscript{rd} JIADONG XU}
-		\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-			\textit{name of organization (of Aff.)}\\
-			City, Country \\
+		\IEEEauthorblockA{\textit{Faculty of Engineering } \\
+			\textit
+			Bristol, UK \\
 			email address or ORCID}
 		\and
 		\IEEEauthorblockN{4\textsuperscript{th} JIAHUI LIU}
-		\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-			\textit{name of organization (of Aff.)}\\
-			City, Country \\
-			email address or ORCID}
+		\IEEEauthorblockA{\textit{Faculty of Engineering } \\
+			\textit
+			Bristol, UK \\
+			ye23356@bristol.ac.uk}
 	}
 	
 	\maketitle
@@ -138,6 +138,37 @@
 	\subsection{GIANA}\label{AA}
 	GIANA is a tool for analyzing immune cell receptor sequence data, which calculates the distance between sequences and similarity matrices. By passing the data of the alpha chain and the beta chain to the GIANA script separately, and specifying the output directory, the corresponding distance and similarity matrix files can be generated.
 	
+	\subsection{TCRDist}\label{AA}
+	TCRDist is a toolkit for calculating TCR distances, which can be calculated based on their sequence characteristics (e.g., CDR3 sequences) and possibly other information (e.g., expression patterns of TCRs).
+	
+	For a given set of TCR sequences, the distances between all possible pairs are calculated, and the results are formed into a distance matrix, each element in the matrix represents the distance or similarity between the pairs, and once the distance matrix is calculated, visualization tools can be used to show the similarity or difference between the TCRs.
+	
+	\subsection{PCA}\label{AA}
+	PCA (Principal Component Analysis) is used to project a high-dimensional dataset into a low-dimensional space, by finding the principal variance directions (principal components) in the data, and then projecting the data onto these directions, so as to achieve dimensionality reduction of the data.
+	
+	Given a dataset \( X \) with \( n \) samples and \( d \) features, where \( X \) is an \( n \times d \) matrix, PCA aims to find a \( k \)-dimensional linear subspace that maximally preserves the variance of the original data. This subspace is defined by the \( k \) most important principal components.
+	
+	\text{Compute the mean vector of the data: } 
+	$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$
+	
+	Standardize the data: Subtract the mean vector from each sample to obtain the centered data: \( \tilde{X} = X - \bar{x} \)
+	
+	Compute the covariance matrix of the data: \( \Sigma = \frac{1}{n} \tilde{X}^T \tilde{X} \)
+	
+	Perform the eigendecomposition of the covariance matrix: $\Sigma = V \Lambda V^T$, where $V$ is the matrix containing the eigenvectors and $\Lambda$ is a diagonal matrix containing the eigenvalues.
+	
+	Select the top \(k\) eigenvectors corresponding to the largest eigenvalues: \(V_k = \begin{bmatrix} | & | & & | \\ v_1 & v_2 & \cdots & v_k \\ | & | & & | \end{bmatrix}\)
+	
+	Project the original data onto the selected principal components: \(Z = \tilde{X} V_k\)
+	
+	Through these steps, we obtain a lower-dimensional dataset \(Z\) with dimensions \(n \times k\). In this subspace, the variance of the data is maximally preserved, and the principal components \(v_i\) represent the most important directions in the data.
+	\subsection{t-SNE}\label{AA}
+	t-SNE is a nonlinear dimensionality reduction algorithm designed to map high-dimensional data to two- or three-dimensional space. t-SNE first calculates the similarity between data points in the high-dimensional space, and then maintains this similarity relationship in the low-dimensional space, using the t-distribution to represent the distance between the data points in the low-dimensional space, which helps to preserve the local structure of the data.
+	
+	\subsection{UMAP}\label{AA}
+	UMAP (\emph{Uniform Manifold Approximation and Projection}) is a nonlinear dimensionality reduction algorithm, similar to t-SNE, but with faster computation speed and better ability to maintain the global structure than t-SNE.
+	
+	UMAP achieves dimensionality reduction and visualization through the following steps: first, calculate the similarity between data points, and then construct a neighborhood map to represent the local relationship between data points, second, optimize the manifold structure in the high-dimensional space to keep the distance of adjacent data points in the low-dimensional space as similar as possible, and finally, map the optimized manifold structure to the low-dimensional space to generate a new low-dimensional representation for visualization and analysis.
 	\subsection{DecisionTreeClassifier}\label{AA}
 	DecisionTreeClassifier is a tree-based supervised learning algorithm for classifying and regressing data. In the classification task, the decision tree generates a tree by performing a series of splits on the input features, with each split node representing a feature and each leaf node representing a category.
 	\begin{itemize}
