@@ -40,6 +40,7 @@ def GIANA_encoder_pd(df, chains=['alpha', 'beta'],ST=3):
         df.loc[:, 'encoded_cdr3'] = cdr3_beta_encoded
     return df
 
+# from encoders.GIANA_encoder import GIANA_encoder_pd
 # human = GIADA_encoder_pd(human, chains=['alpha', 'beta'])
 # it will add a new column 'encoded_cdr3' to the dataframe, which contains the encoded cdr3 sequences.
 
