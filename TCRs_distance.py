@@ -15,7 +15,7 @@ gap_penalty - the penalty accrued for gaps in the pairwise alignment.
 '''
 
 class TCR:
-    def __init__(self, cdr3_alpha, cdr3_beta=None,v_segm_alpha=None,v_segm_beta=None,j_segm_alpha=None,j_segm_beta=None,mhc_a=None,mhc_b=None, epitope=None,weight=None):
+    def __init__(self, cdr3_alpha=None, cdr3_beta=None,v_segm_alpha=None,v_segm_beta=None,j_segm_alpha=None,j_segm_beta=None,mhc_a=None,mhc_b=None, epitope=None,weight=None):
         self.cdr3_alpha = cdr3_alpha
         self.cdr3_beta = cdr3_beta
         self.v_segm_alpha=v_segm_alpha

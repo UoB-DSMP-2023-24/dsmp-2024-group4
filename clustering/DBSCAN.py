@@ -15,19 +15,19 @@ import itertools
 from sklearn.metrics import adjusted_rand_score,silhouette_score
 df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
 df = df[df['species'] == 'HomoSapiens']
-df = remove_imbalance(df, threshold=10)
+# df = remove_imbalance(df, threshold=10)
 # df = sampler(df, n_samples=2000, n_epitopes=10)
 # head = None
 # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
 # complex.id,cdr3_a_aa,v_a_gene,j_a_gene,species,mhc.a,mhc.b,mhc.class,epitope,vdjdb.score,cdr3_b_aa,v_b_gene,j_b_gene
 cdr3_alpha = df['cdr3_a_aa'].tolist()
-cdr3_beta = df['cdr3_b_aa'].tolist()
+# cdr3_beta = df['cdr3_b_aa'].tolist()
 v_segm_alpha = df['v_a_gene'].tolist()
-v_segm_beta = df['v_b_gene'].tolist()
+# v_segm_beta = df['v_b_gene'].tolist()
 j_segm_alpha = df['j_a_gene'].tolist()
-j_segm_beta = df['j_b_gene'].tolist()
+# j_segm_beta = df['j_b_gene'].tolist()
 mhc_a = df['mhc.a'].tolist()
-mhc_b = df['mhc.b'].tolist()
+# mhc_b = df['mhc.b'].tolist()
 epitope = df['epitope'].tolist()
 n_epitopes = len(set(epitope))
 
@@ -64,7 +64,7 @@ np.save('distance_matrix.npy', dist)
 
 epitope_num=len(set(epitope))
 
-cluster=DBSCAN(eps=110, min_samples=4, metric='precomputed')
+cluster=DBSCAN(eps=115, min_samples=4, metric='precomputed')
 cluster.fit(dist)
 
 # print(adjusted_rand_score(epitope, cluster.labels_))
@@ -80,3 +80,6 @@ for eps, min_samples in itertools.product(eps_list, min_samples_list):
     silhouette_score_matrix[(eps-90)//5][(min_samples-2)] = silhouette_score(dist, cluster.labels_, metric='precomputed')
 print(silhouette_score_matrix)
 np.save('silhouette_score_matrix.npy', silhouette_score_matrix)'''
+
+# human combined 0.08665965139824244(eps=115, min_samples=4)
+

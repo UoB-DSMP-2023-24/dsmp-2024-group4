@@ -48,23 +48,24 @@ df = remove_imbalance(df, threshold=10)
 # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
 # complex.id,cdr3_a_aa,v_a_gene,j_a_gene,species,mhc.a,mhc.b,mhc.class,epitope,vdjdb.score,cdr3_b_aa,v_b_gene,j_b_gene
 cdr3_alpha = df['cdr3_a_aa'].tolist()
-cdr3_beta = df['cdr3_b_aa'].tolist()
+# cdr3_beta = df['cdr3_b_aa'].tolist()
 v_segm_alpha = df['v_a_gene'].tolist()
-v_segm_beta = df['v_b_gene'].tolist()
+# v_segm_beta = df['v_b_gene'].tolist()
 j_segm_alpha = df['j_a_gene'].tolist()
-j_segm_beta = df['j_b_gene'].tolist()
+# j_segm_beta = df['j_b_gene'].tolist()
 mhc_a = df['mhc.a'].tolist()
-mhc_b = df['mhc.b'].tolist()
+# mhc_b = df['mhc.b'].tolist()
 epitope = df['epitope'].tolist()
 n_epitopes = len(set(epitope))
 
 num_tcrs = len(cdr3_alpha)
 
+# def __init__(self, cdr3_alpha=None, cdr3_beta=None,v_segm_alpha=None,v_segm_beta=None,j_segm_alpha=None,j_segm_beta=None,mhc_a=None,mhc_b=None, epitope=None,weight=None):
 # combine alpha and beta chain
-TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(num_tcrs)]
+# TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(num_tcrs)]
+# only alpha chain
+TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], None, epitope[i]) for i in range(num_tcrs)]
 dist,indice = distance_cal(TCRs)
-# 归一化
-dist = (dist - dist.min()) / (dist.max() - dist.min())
 '''
 # save dist
 with open('dist_sample.txt', 'w') as f:
