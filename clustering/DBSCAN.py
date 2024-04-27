@@ -12,24 +12,26 @@ from TCRs_distance import distance_cal,dist_to_matrix,TCR
 from sklearn.cluster import DBSCAN
 import pandas as pd
 import itertools
-
-df = pd.read_csv('../cdr3_alpha_beta.csv')
-
-df=remove_imbalance(df,threshold=10)
-df=sampler(df, n_samples=2000, n_epitopes=10)
+from sklearn.metrics import adjusted_rand_score,silhouette_score
+df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
+df = df[df['species'] == 'HomoSapiens']
+df = remove_imbalance(df, threshold=10)
+# df = sampler(df, n_samples=2000, n_epitopes=10)
 # head = None
 # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
-# complex.id,cdr3_alpha,v.segm_alpha,j.segm_alpha,cdr3_beta,v.segm_beta,j.segm_beta,species,mhc.a,mhc.b,mhc.class,antigen.epitope,vdjdb.score
-cdr3_alpha = df['cdr3_alpha'].tolist()
-cdr3_beta = df['cdr3_beta'].tolist()
-v_segm_alpha = df['v.segm_alpha'].tolist()
-v_segm_beta = df['v.segm_beta'].tolist()
-j_segm_alpha = df['j.segm_alpha'].tolist()
-j_segm_beta = df['j.segm_beta'].tolist()
+# complex.id,cdr3_a_aa,v_a_gene,j_a_gene,species,mhc.a,mhc.b,mhc.class,epitope,vdjdb.score,cdr3_b_aa,v_b_gene,j_b_gene
+cdr3_alpha = df['cdr3_a_aa'].tolist()
+cdr3_beta = df['cdr3_b_aa'].tolist()
+v_segm_alpha = df['v_a_gene'].tolist()
+v_segm_beta = df['v_b_gene'].tolist()
+j_segm_alpha = df['j_a_gene'].tolist()
+j_segm_beta = df['j_b_gene'].tolist()
 mhc_a = df['mhc.a'].tolist()
 mhc_b = df['mhc.b'].tolist()
-epitope = df['antigen.epitope'].tolist()
-n_epitopes=len(set(epitope))
+epitope = df['epitope'].tolist()
+n_epitopes = len(set(epitope))
+
+num_tcrs = len(cdr3_alpha)
 
 '''
 cdr3_alpha = df[1].tolist()
@@ -52,16 +54,29 @@ mhc_b.pop(0)
 epitope.pop(0)
 n_epitopes=len(set(epitope))
 '''
+
 TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]
 dist, indices = distance_cal(TCRs)
 
-dist=dist_to_matrix(dist, indices,len(cdr3_alpha))
-epitope_num=len(set(epitope))
-cluster=DBSCAN(eps=8, min_samples=n_epitopes, metric='precomputed')
-cluster.fit(dist)
-from sklearn.metrics import adjusted_rand_score,silhouette_score
-print(adjusted_rand_score(epitope, cluster.labels_))
-# print(silhouette_score(seqs_mat,cluster.labels_))
+dist=dist_to_matrix(dist, indices,len(cdr3_alpha)).astype(np.float64)
+# save the distance matrix
+np.save('distance_matrix.npy', dist)
 
-# I think we should select a total of 2000-3000 TCRs corresponding to epitope in 5-10 for clustering.
-# We do not need to use all the data in the dataset and all types of epitope in the dataset.
+epitope_num=len(set(epitope))
+
+cluster=DBSCAN(eps=110, min_samples=4, metric='precomputed')
+cluster.fit(dist)
+
+# print(adjusted_rand_score(epitope, cluster.labels_))
+print(cluster.labels_.tolist())
+print(silhouette_score(dist,cluster.labels_,metric='precomputed'))
+'''
+eps_list = [i for i in range(90, 150, 5)]
+min_samples_list = [i for i in range(2, 10)]
+silhouette_score_matrix = np.zeros((len(eps_list), len(min_samples_list)))
+for eps, min_samples in itertools.product(eps_list, min_samples_list):
+    cluster = DBSCAN(eps=eps, min_samples=min_samples, metric='precomputed')
+    cluster.fit(dist)
+    silhouette_score_matrix[(eps-90)//5][(min_samples-2)] = silhouette_score(dist, cluster.labels_, metric='precomputed')
+print(silhouette_score_matrix)
+np.save('silhouette_score_matrix.npy', silhouette_score_matrix)'''
