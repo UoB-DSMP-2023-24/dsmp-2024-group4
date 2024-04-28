@@ -14,20 +14,21 @@ import pandas as pd
 import itertools
 from sklearn.metrics import adjusted_rand_score,silhouette_score
 df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
-df = df[df['species'] == 'HomoSapiens']
+# df = df[df['species'] == 'HomoSapiens']
+df = df[df['species'] == 'MusMusculus']
 # df = remove_imbalance(df, threshold=10)
 # df = sampler(df, n_samples=2000, n_epitopes=10)
 # head = None
 # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
 # complex.id,cdr3_a_aa,v_a_gene,j_a_gene,species,mhc.a,mhc.b,mhc.class,epitope,vdjdb.score,cdr3_b_aa,v_b_gene,j_b_gene
 cdr3_alpha = df['cdr3_a_aa'].tolist()
-# cdr3_beta = df['cdr3_b_aa'].tolist()
+cdr3_beta = df['cdr3_b_aa'].tolist()
 v_segm_alpha = df['v_a_gene'].tolist()
-# v_segm_beta = df['v_b_gene'].tolist()
+v_segm_beta = df['v_b_gene'].tolist()
 j_segm_alpha = df['j_a_gene'].tolist()
-# j_segm_beta = df['j_b_gene'].tolist()
+j_segm_beta = df['j_b_gene'].tolist()
 mhc_a = df['mhc.a'].tolist()
-# mhc_b = df['mhc.b'].tolist()
+mhc_b = df['mhc.b'].tolist()
 epitope = df['epitope'].tolist()
 n_epitopes = len(set(epitope))
 
@@ -56,6 +57,9 @@ n_epitopes=len(set(epitope))
 '''
 
 TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]
+# TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], None, epitope[i]) for i in range(num_tcrs)]
+# TCRs = [TCR(None,cdr3_beta[i],None,v_segm_beta[i],None,j_segm_beta[i],None,mhc_b[i],epitope[i]) for i in range(num_tcrs)]
+
 dist, indices = distance_cal(TCRs)
 
 dist=dist_to_matrix(dist, indices,len(cdr3_alpha)).astype(np.float64)
@@ -82,4 +86,11 @@ print(silhouette_score_matrix)
 np.save('silhouette_score_matrix.npy', silhouette_score_matrix)'''
 
 # human combined 0.08665965139824244(eps=115, min_samples=4)
+# human alpha 0.06426147759947026(eps=45, min_samples=4)
+# human beta 0.0665827200737548(eps=115, min_samples=4)
+
+# mouse combined -0.004334882053146476(eps=90, min_samples=4)
+# mouse combined 0.1220652602599949(eps=110, min_samples=4)
+
+
 

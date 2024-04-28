@@ -45,3 +45,11 @@ def GIANA_encoder_pd(df, chains=['alpha', 'beta'],ST=3):
 # it will add a new column 'encoded_cdr3' to the dataframe, which contains the encoded cdr3 sequences.
 
 
+import numpy as np
+import pandas as pd
+df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
+# df = df[df['species'] == 'HomoSapiens']
+df = df[df['species'] == 'MusMusculus']
+df = GIANA_encoder_pd(df, chains=['alpha', 'beta'])
+print(df)
+
