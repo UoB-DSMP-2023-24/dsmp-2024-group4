@@ -13,9 +13,12 @@ from sklearn.cluster import DBSCAN
 import pandas as pd
 import itertools
 from sklearn.metrics import adjusted_rand_score,silhouette_score
+from cluster_tools import calculate_purity,pure_clusters
+
+
 df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
-# df = df[df['species'] == 'HomoSapiens']
-df = df[df['species'] == 'MusMusculus']
+df = df[df['species'] == 'HomoSapiens']
+# df = df[df['species'] == 'MusMusculus']
 # df = remove_imbalance(df, threshold=10)
 # df = sampler(df, n_samples=2000, n_epitopes=10)
 # head = None
@@ -59,7 +62,7 @@ n_epitopes=len(set(epitope))
 TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]
 # TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], None, epitope[i]) for i in range(num_tcrs)]
 # TCRs = [TCR(None,cdr3_beta[i],None,v_segm_beta[i],None,j_segm_beta[i],None,mhc_b[i],epitope[i]) for i in range(num_tcrs)]
-
+'''
 dist, indices = distance_cal(TCRs)
 
 dist=dist_to_matrix(dist, indices,len(cdr3_alpha)).astype(np.float64)
@@ -68,22 +71,40 @@ np.save('distance_matrix.npy', dist)
 
 epitope_num=len(set(epitope))
 
-cluster=DBSCAN(eps=115, min_samples=4, metric='precomputed')
+cluster=DBSCAN(eps=100, min_samples=4, metric='precomputed')
 cluster.fit(dist)
 
 # print(adjusted_rand_score(epitope, cluster.labels_))
 print(cluster.labels_.tolist())
 print(silhouette_score(dist,cluster.labels_,metric='precomputed'))
+print(pure_clusters(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope})))
+print(calculate_purity(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope})))
+
 '''
-eps_list = [i for i in range(90, 150, 5)]
-min_samples_list = [i for i in range(2, 10)]
-silhouette_score_matrix = np.zeros((len(eps_list), len(min_samples_list)))
-for eps, min_samples in itertools.product(eps_list, min_samples_list):
-    cluster = DBSCAN(eps=eps, min_samples=min_samples, metric='precomputed')
+
+def df2dict(df):
+    cluster_id = df.index
+    score = df.values
+    return dict(zip(cluster_id, score))
+# load the distance matrix
+
+dist = np.load('distance_matrix.npy')
+eps_list = [i for i in range(60, 120, 5)]
+
+results_purity = []
+results_score = []
+
+for eps in eps_list:
+    cluster = DBSCAN(eps=eps, min_samples=4, metric='precomputed')
     cluster.fit(dist)
-    silhouette_score_matrix[(eps-90)//5][(min_samples-2)] = silhouette_score(dist, cluster.labels_, metric='precomputed')
-print(silhouette_score_matrix)
-np.save('silhouette_score_matrix.npy', silhouette_score_matrix)'''
+    pure_result = calculate_purity(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope}))
+    results_purity.append(df2dict(pure_result))
+    results_score.append(pure_clusters(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope})))
+
+print(results_purity)
+print(results_score)
+
+
 
 # human combined 0.08665965139824244(eps=115, min_samples=4)
 # human alpha 0.06426147759947026(eps=45, min_samples=4)

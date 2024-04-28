@@ -7,7 +7,7 @@ from sklearn.metrics import silhouette_score,davies_bouldin_score,calinski_harab
 
 
 def dbscan(length, eps, min_samples, dist_matrix):
-    labels = [-1] * length  # -1 表示未分类，初始化所有点为未分类
+    labels = [-1] * length  # -1 means unclassified, initialise all points as unclassified
     cluster_id = 0
 
     def find_neighbors(i):
@@ -15,7 +15,7 @@ def dbscan(length, eps, min_samples, dist_matrix):
 
     for i in range(length):
         if labels[i] != -1:
-            continue  # 如果已经访问过，跳过
+            continue  # Skip if already visited
 
         neighbors = find_neighbors(i)
         if len(neighbors) < min_samples:
@@ -69,6 +69,7 @@ TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm
 # only alpha chain
 # TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], None, epitope[i]) for i in range(num_tcrs)]
 dist,indices = distance_cal(TCRs)
+
 '''
 # save dist
 with open('dist_sample.txt', 'w') as f:
@@ -81,6 +82,7 @@ with open('dist_sample.txt', 'r') as f:
     for line in f:
         dist.append(float(line.strip()))
 '''
+
 '''
 from seaborn import kdeplot
 dist_matrix = dist_to_matrix(dist, indices, num_tcrs)
