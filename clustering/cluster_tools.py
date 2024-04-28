@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # Calculate the purity of each cluster
 def calculate_purity(df):
