@@ -13,3 +13,15 @@ def pure_clusters_fraction(cluster_labels, target_labels):
     purity = calculate_purity(df)
     pure_cluster_fraction = (purity == 1).sum() / len(purity)
     return pure_cluster_fraction
+
+
+# Calculate Pure Cluster Retention
+def pure_cluster_retention(cluster_labels, target_labels):
+    df = pd.DataFrame({'cluster_id': cluster_labels, 'epitope': target_labels})
+    purity = calculate_purity(df)
+    pure_clusters = purity[purity == 1].index
+    total_pure_tcrs = df[df['cluster_id'].isin(pure_clusters)].shape[0]
+    total_tcrs = df.shape[0]
+    pure_cluster_retention_rate = total_pure_tcrs / total_tcrs
+
+    return pure_cluster_retention_rate

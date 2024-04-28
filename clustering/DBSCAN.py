@@ -12,13 +12,13 @@ from TCRs_distance import distance_cal,dist_to_matrix,TCR
 from sklearn.cluster import DBSCAN
 import pandas as pd
 import itertools
-from sklearn.metrics import adjusted_rand_score,silhouette_score
-from cluster_tools import pure_clusters_fraction
+from sklearn.metrics import adjusted_rand_score,silhouette_score,normalized_mutual_info_score
+from cluster_tools import pure_clusters_fraction,pure_cluster_retention
 
 
 df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
-df = df[df['species'] == 'HomoSapiens']
-# df = df[df['species'] == 'MusMusculus']
+# df = df[df['species'] == 'HomoSapiens']
+df = df[df['species'] == 'MusMusculus']
 # df = remove_imbalance(df, threshold=10)
 # df = sampler(df, n_samples=2000, n_epitopes=10)
 # head = None
@@ -59,58 +59,71 @@ epitope.pop(0)
 n_epitopes=len(set(epitope))
 '''
 
-TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]
+# TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]
 # TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], None, epitope[i]) for i in range(num_tcrs)]
-# TCRs = [TCR(None,cdr3_beta[i],None,v_segm_beta[i],None,j_segm_beta[i],None,mhc_b[i],epitope[i]) for i in range(num_tcrs)]
-'''
+TCRs = [TCR(None,cdr3_beta[i],None,v_segm_beta[i],None,j_segm_beta[i],None,mhc_b[i],epitope[i]) for i in range(num_tcrs)]
+
+
 dist, indices = distance_cal(TCRs)
 
 dist=dist_to_matrix(dist, indices,len(cdr3_alpha)).astype(np.float64)
+
 # save the distance matrix
-np.save('distance_matrix.npy', dist)
+# np.save('distance_matrix.npy', dist)
+# dist = np.load('distance_matrix.npy')
 
 epitope_num=len(set(epitope))
 
-cluster=DBSCAN(eps=100, min_samples=4, metric='precomputed')
+cluster=DBSCAN(eps=22, min_samples=4, metric='precomputed')
 cluster.fit(dist)
 
 # print(adjusted_rand_score(epitope, cluster.labels_))
 print(cluster.labels_.tolist())
-print(silhouette_score(dist,cluster.labels_,metric='precomputed'))
-print(pure_clusters(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope})))
-print(calculate_purity(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope})))
+print(pure_clusters_fraction(cluster.labels_, epitope))
+print(pure_cluster_retention(cluster.labels_, epitope))
+print(normalized_mutual_info_score(epitope, cluster.labels_))
 
 '''
-
 def df2dict(df):
     cluster_id = df.index
     score = df.values
     return dict(zip(cluster_id, score))
 # load the distance matrix
 
-dist = np.load('distance_matrix.npy')
-eps_list = [i for i in range(60, 120, 5)]
+# dist = np.load('distance_matrix.npy')
+eps_list = [i for i in range(10, 120, 2)]
 
-results_purity = []
-results_score = []
+purity_fraction = []
+purity_retention = []
+nmi=[]
 
 for eps in eps_list:
     cluster = DBSCAN(eps=eps, min_samples=4, metric='precomputed')
     cluster.fit(dist)
 
-    results_score.append(pure_clusters_fraction(cluster.labels_, epitope))
+    purity_fraction.append(pure_clusters_fraction(cluster.labels_, epitope))
+    purity_retention.append(pure_cluster_retention(cluster.labels_, epitope))
+    nmi.append(normalized_mutual_info_score(epitope, cluster.labels_))
 
-print(results_purity)
-print(results_score)
+import matplotlib.pyplot as plt
+plt.plot(eps_list, purity_fraction, label='Purity Fraction')
+plt.plot(eps_list, purity_retention, label='Purity Retention')
+plt.plot(eps_list, nmi, label='NMI')
+plt.legend()
+plt.show()
+'''
 
 
 
-# human combined 0.08665965139824244(eps=115, min_samples=4)
-# human alpha 0.06426147759947026(eps=45, min_samples=4)
-# human beta 0.0665827200737548(eps=115, min_samples=4)
 
-# mouse combined -0.004334882053146476(eps=90, min_samples=4)
-# mouse combined 0.1220652602599949(eps=110, min_samples=4)
+# from left to right: purity fraction, purity retention, NMI
+# human combined (eps=70, min_samples=4) 0.42857142857142855 0.11241970021413276 0.4069359548003655
+# human alpha (eps=22, min_samples=4) 0.1951219512195122 0.043897216274089934 0.426454793081235
+# human beta (eps=22, min_samples=4) 0.39655172413793105 0.08029978586723768 0.37061544815295017
+
+# mouse combined (eps=70, min_samples=4) 0.2777777777777778 0.04212860310421286 0.2627689472275712
+# mouse alpha (eps=22, min_samples=4) 0.22580645161290322 0.06319290465631928 0.411312103709991
+# mouse beta (eps=22, min_samples=4) 0.2631578947368421 0.038802660753880266 0.4108547695686911
 
 
 
