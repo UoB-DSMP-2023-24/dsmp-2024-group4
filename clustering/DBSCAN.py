@@ -13,7 +13,7 @@ from sklearn.cluster import DBSCAN
 import pandas as pd
 import itertools
 from sklearn.metrics import adjusted_rand_score,silhouette_score
-from cluster_tools import calculate_purity,pure_clusters
+from cluster_tools import pure_clusters_fraction
 
 
 df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
@@ -97,9 +97,8 @@ results_score = []
 for eps in eps_list:
     cluster = DBSCAN(eps=eps, min_samples=4, metric='precomputed')
     cluster.fit(dist)
-    pure_result = calculate_purity(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope}))
-    results_purity.append(df2dict(pure_result))
-    results_score.append(pure_clusters(pd.DataFrame({'cluster_id': cluster.labels_, 'epitope': epitope})))
+
+    results_score.append(pure_clusters_fraction(cluster.labels_, epitope))
 
 print(results_purity)
 print(results_score)

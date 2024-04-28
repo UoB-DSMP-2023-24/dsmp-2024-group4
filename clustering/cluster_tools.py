@@ -7,7 +7,8 @@ def calculate_purity(df):
     return cluster_purity
 
 # Define pure clusters: clusters with a purity of 1
-def pure_clusters_fraction(df):
+def pure_clusters_fraction(cluster_labels, target_labels):
+    df=pd.DataFrame({'cluster_id': cluster_labels, 'epitope': target_labels})
     purity = calculate_purity(df)
     pure_cluster_fraction = (purity == 1).sum() / len(purity)
     return pure_cluster_fraction
