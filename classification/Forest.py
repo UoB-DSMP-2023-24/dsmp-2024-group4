@@ -13,7 +13,7 @@ def split_cdr3(cdr3_sequence):
 
 df = pd.read_csv('../cdr3_alpha_beta.csv')
 # df=sampler(df, n_samples=10000, n_epitopes=10)
-df=remove_imbalance(df,threshold=10)
+# df=remove_imbalance(df,threshold=10)
 # df=transform_imbalance(df,threshold=10)
 # print(len(df['antigen.epitope'].value_counts()))
 df=df[['cdr3_alpha','antigen.epitope']]
