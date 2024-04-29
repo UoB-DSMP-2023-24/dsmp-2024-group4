@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.21)  25 APR 2024 14:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.21)  28 APR 2024 20:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -265,37 +265,7 @@ File: l3backend-pdftex.def 2024-03-14 L3 backend support: PDF output (pdfTeX)
 )
 (./DSMP_Report.aux
 
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
-
-
-LaTeX Warning: Label `AA' multiply defined.
+LaTeX Warning: Label `fig' multiply defined.
 
 )
 \openout1 = `DSMP_Report.aux'.
@@ -350,34 +320,50 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 50.
 
 (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2
-024/texmf-dist/fonts/enc/dvips/base/8r.enc}
-
-
-] [2]
-Underfull \hbox (badness 1960) in paragraph at lines 178--179
-[]\OT1/ptm/m/n/10 Prediction: The test sam-ple is tra-versed along the
+)
+Underfull \hbox (badness 3919) in paragraph at lines 67--68
+[]\OT1/ptm/m/n/10 "TCR meta-clonotypes for biomarker dis-cov-ery with
  []
 
-[3]
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 2
-71.
- (c:/texlive/2024/texmf-dist/tex/latex/psnfss/omsptm.fd
+[1{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/202
+4/texmf-dist/fonts/enc/dvips/base/8r.enc}
+
+
+]
+Underfull \hbox (badness 1622) in paragraph at lines 77--78
+[]\OT1/ptm/m/n/10 This ar-ti-cle first pre-pro-cesses the dataset to pre-serve
+ []
+
+
+Underfull \hbox (badness 3449) in paragraph at lines 77--78
+\OT1/ptm/m/n/10 'j.segm', 'species', 'mhc.a', 'mhc.b', 'mhc.class', 'anti-
+ []
+
+[2]
+<fig1.png, id=19, 428.09938pt x 345.29pt>
+File: fig1.png Graphic file (type png)
+<use fig1.png>
+Package pdftex.def Info: fig1.png  used on input line 148.
+(pdftex.def)             Requested size: 176.38414pt x 142.26378pt.
+ [3 <./fig1.png>] [4] [5]
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 3
+28.
+
+(c:/texlive/2024/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 271.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 328.
 
-Underfull \hbox (badness 10000) in paragraph at lines 292--293
+Underfull \hbox (badness 10000) in paragraph at lines 340--341
 []\OT1/ptm/m/n/10 Data merg-ing: cdr3[]alpha[]df and cdr3[]beta[]df
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 292--293
+Underfull \hbox (badness 10000) in paragraph at lines 340--341
 \OT1/ptm/m/n/10 were com-bined ac-cord-ing to the columns
  []
 
-[4]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -389,9 +375,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[5
-
-] (./DSMP_Report.aux)
+[6] (./DSMP_Report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
@@ -402,13 +386,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4240 strings out of 474104
- 65695 string characters out of 5747502
- 1947496 words of memory out of 5000000
- 26566 multiletter control sequences out of 15000+600000
- 605938 words of font info for 132 fonts, out of 8000000 for 9000
+ 4229 strings out of 474104
+ 65660 string characters out of 5747502
+ 1946496 words of memory out of 5000000
+ 26560 multiletter control sequences out of 15000+600000
+ 602825 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,747b,334s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,11n,65p,1173b,334s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/tex
 live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2024/texmf-dis
@@ -421,10 +405,10 @@ ive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2024/texmf-dis
 t/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on DSMP_Report.pdf (5 pages, 168724 bytes).
+Output written on DSMP_Report.pdf (6 pages, 234097 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 52 compressed objects within 1 object stream
+ 92 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
