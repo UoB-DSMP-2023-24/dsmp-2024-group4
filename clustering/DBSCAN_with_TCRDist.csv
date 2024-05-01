@@ -1,0 +1,7 @@
+Group,Purity Fraction,Purity Retention,NMI
+human_combined_TCRDist,0.4286,0.1124,0.407
+human alpha_TCRDist,0.1951,0.0439,0.4265
+human beta_TCRDist,0.3966,0.0803,0.3706
+mouse combined_TCRDist,0.2778,0.0421,0.2628
+mouse alpha_TCRDist,0.2258,0.0632,0.4113
+mouse beta_TCRDist,0.2632,0.0388,0.4109
