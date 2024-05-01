@@ -22,8 +22,8 @@ def GIANA_encoder(TCRs, ST=3):
 
 def GIANA_encoder_pd(df, chains=['alpha', 'beta'],ST=3):
     if chains== ['alpha', 'beta']:
-        cdr3_alpha = df['cdr3_a_aa'].tolist()
-        cdr3_beta = df['cdr3_b_aa'].tolist()
+        cdr3_alpha = df['cdr3_a'].tolist()
+        cdr3_beta = df['cdr3_b'].tolist()
         cdr3_alpha_encoded = [EncodingCDR3(seq[ST:-2], M6, n0) for seq in cdr3_alpha]
         cdr3_beta_encoded = [EncodingCDR3(seq[ST:-2], M6, n0) for seq in cdr3_beta]
         cdr3_alpha_array = np.array(cdr3_alpha_encoded)
@@ -31,11 +31,11 @@ def GIANA_encoder_pd(df, chains=['alpha', 'beta'],ST=3):
         cdr3_output=np.concatenate((cdr3_alpha_array, cdr3_beta_array), axis=1).tolist()
         df.loc[:, 'encoded_cdr3'] = cdr3_output
     elif chains== ['alpha']:
-        cdr3_alpha = df['cdr3_a_aa'].tolist()
+        cdr3_alpha = df['cdr3_a'].tolist()
         cdr3_alpha_encoded = [EncodingCDR3(seq[ST:-2], M6, n0) for seq in cdr3_alpha]
         df.loc[:, 'encoded_cdr3'] = cdr3_alpha_encoded
     elif chains== ['beta']:
-        cdr3_beta = df['cdr3_b_aa'].tolist()
+        cdr3_beta = df['cdr3_b'].tolist()
         cdr3_beta_encoded = [EncodingCDR3(seq[ST:-2], M6, n0) for seq in cdr3_beta]
         df.loc[:, 'encoded_cdr3'] = cdr3_beta_encoded
     return df
@@ -43,13 +43,4 @@ def GIANA_encoder_pd(df, chains=['alpha', 'beta'],ST=3):
 # from encoders.GIANA_encoder import GIANA_encoder_pd
 # human = GIADA_encoder_pd(human, chains=['alpha', 'beta'])
 # it will add a new column 'encoded_cdr3' to the dataframe, which contains the encoded cdr3 sequences.
-
-
-import numpy as np
-import pandas as pd
-df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
-# df = df[df['species'] == 'HomoSapiens']
-df = df[df['species'] == 'MusMusculus']
-df = GIANA_encoder_pd(df, chains=['alpha', 'beta'])
-print(df)
 
