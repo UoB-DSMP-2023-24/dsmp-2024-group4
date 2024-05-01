@@ -134,4 +134,5 @@ print("Cluster labels:", cluster_labels)
 print("Silhouette score:", silhouette_score(dist_to_matrix(dist,indices,len(cdr3_alpha)).astype(float), cluster_labels, metric='precomputed'))
 print("Davies-Bouldin score:", davies_bouldin_score(dist_to_matrix(dist,indices,len(cdr3_alpha)).astype(float), cluster_labels))
 print("Calinski-Harabasz score:", calinski_harabasz_score(dist_to_matrix(dist,indices,len(cdr3_alpha)).astype(float), cluster_labels))
+
 '''

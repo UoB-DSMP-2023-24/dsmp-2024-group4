@@ -258,7 +258,59 @@ def dist_to_matrix(dist, indices, nseqs):
 
 def main():
 
-    df = pd.read_csv('cdr3_alpha_beta_without_0score.csv')
+    df = pd.read_csv('pre-processing final/cdr3_alpha_beta_df.csv')
+    human_df = df[df['species'] == 'HomoSapiens']
+    mouse_df = df[df['species'] == 'MusMusculus']
+    # TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]
+    # TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], None, epitope[i]) for i in range(num_tcrs)]
+    # TCRs = [TCR(None,cdr3_beta[i],None,v_segm_beta[i],None,j_segm_beta[i],None,mhc_b[i],epitope[i]) for i in range(num_tcrs)
+    cdr3_alpha_human = human_df['cdr3_a_aa'].tolist()
+    cdr3_beta_human = human_df['cdr3_b_aa'].tolist()
+    v_segm_alpha_human = human_df['v_a_gene'].tolist()
+    v_segm_beta_human = human_df['v_b_gene'].tolist()
+    j_segm_alpha_human = human_df['j_a_gene'].tolist()
+    j_segm_beta_human = human_df['j_b_gene'].tolist()
+    mhc_a_human = human_df['mhc.a'].tolist()
+    mhc_b_human = human_df['mhc.b'].tolist()
+    epitope_human = human_df['epitope'].tolist()
+    cdr3_alpha_mouse = mouse_df['cdr3_a_aa'].tolist()
+    cdr3_beta_mouse = mouse_df['cdr3_b_aa'].tolist()
+    v_segm_alpha_mouse = mouse_df['v_a_gene'].tolist()
+    v_segm_beta_mouse = mouse_df['v_b_gene'].tolist()
+    j_segm_alpha_mouse = mouse_df['j_a_gene'].tolist()
+    j_segm_beta_mouse = mouse_df['j_b_gene'].tolist()
+    mhc_a_mouse = mouse_df['mhc.a'].tolist()
+    mhc_b_mouse = mouse_df['mhc.b'].tolist()
+    epitope_mouse = mouse_df['epitope'].tolist()
+
+    human_df_alpha_beta_TCRs = [TCR(cdr3_alpha_human[i], cdr3_beta_human[i], v_segm_alpha_human[i], v_segm_beta_human[i], j_segm_alpha_human[i], j_segm_beta_human[i], mhc_a_human[i], mhc_b_human[i], epitope_human[i]) for i in range(len(cdr3_alpha_human))]
+    mouse_df_alpha_beta_TCRs = [TCR(cdr3_alpha_mouse[i], cdr3_beta_mouse[i], v_segm_alpha_mouse[i], v_segm_beta_mouse[i], j_segm_alpha_mouse[i], j_segm_beta_mouse[i], mhc_a_mouse[i], mhc_b_mouse[i], epitope_mouse[i]) for i in range(len(cdr3_alpha_mouse))]
+    human_df_alpha_TCRs = [TCR(cdr3_alpha_human[i], None, v_segm_alpha_human[i], None, j_segm_alpha_human[i], None, mhc_a_human[i], None, epitope_human[i]) for i in range(len(cdr3_alpha_human))]
+    mouse_df_alpha_TCRs = [TCR(cdr3_alpha_mouse[i], None, v_segm_alpha_mouse[i], None, j_segm_alpha_mouse[i], None, mhc_a_mouse[i], None, epitope_mouse[i]) for i in range(len(cdr3_alpha_mouse))]
+    human_df_beta_TCRs = [TCR(None, cdr3_beta_human[i], None, v_segm_beta_human[i], None, j_segm_beta_human[i], None, mhc_b_human[i], epitope_human[i]) for i in range(len(cdr3_beta_human))]
+    mouse_df_beta_TCRs = [TCR(None, cdr3_beta_mouse[i], None, v_segm_beta_mouse[i], None, j_segm_beta_mouse[i], None, mhc_b_mouse[i], epitope_mouse[i]) for i in range(len(cdr3_beta_mouse))]
+    dist, indices = distance_cal(human_df_alpha_beta_TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, len(human_df_alpha_beta_TCRs))
+    np.save('human_df_alpha_beta_TCRs_distance_matrix.npy', dist_matrix)
+    dist, indices = distance_cal(mouse_df_alpha_beta_TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, len(mouse_df_alpha_beta_TCRs))
+    np.save('mouse_df_alpha_beta_TCRs_distance_matrix.npy', dist_matrix)
+    dist, indices = distance_cal(human_df_alpha_TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, len(human_df_alpha_TCRs))
+    np.save('human_df_alpha_TCRs_distance_matrix.npy', dist_matrix)
+    dist, indices = distance_cal(mouse_df_alpha_TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, len(mouse_df_alpha_TCRs))
+    np.save('mouse_df_alpha_TCRs_distance_matrix.npy', dist_matrix)
+    dist, indices = distance_cal(human_df_beta_TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, len(human_df_beta_TCRs))
+    np.save('human_df_beta_TCRs_distance_matrix.npy', dist_matrix)
+    dist, indices = distance_cal(mouse_df_beta_TCRs)
+    dist_matrix = dist_to_matrix(dist, indices, len(mouse_df_beta_TCRs))
+    np.save('mouse_df_beta_TCRs_distance_matrix.npy', dist_matrix)
+
+
+
+    '''
     # head = None
     # seqs = ['CAVSLDSNYQLIW','CILRVGATGGNNKLTL','CAMREPSGTYQRF']
     # complex.id,cdr3_alpha,v.segm_alpha,j.segm_alpha,cdr3_beta,v.segm_beta,j.segm_beta,species,mhc.a,mhc.b,mhc.class,antigen.epitope,vdjdb.score
@@ -293,6 +345,6 @@ def main():
     dist, indices = distance_cal(TCRs)
     dist_matrix = dist_to_matrix(dist, indices, num_tcrs)
     print(dist_matrix)
-
+    '''
 if __name__ == "__main__":
     main()

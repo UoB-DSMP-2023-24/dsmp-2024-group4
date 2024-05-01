@@ -61,20 +61,24 @@ n_epitopes=len(set(epitope))
 
 # TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]
 # TCRs = [TCR(cdr3_alpha[i], None, v_segm_alpha[i], None, j_segm_alpha[i], None, mhc_a[i], None, epitope[i]) for i in range(num_tcrs)]
-TCRs = [TCR(None,cdr3_beta[i],None,v_segm_beta[i],None,j_segm_beta[i],None,mhc_b[i],epitope[i]) for i in range(num_tcrs)]
+# TCRs = [TCR(None,cdr3_beta[i],None,v_segm_beta[i],None,j_segm_beta[i],None,mhc_b[i],epitope[i]) for i in range(num_tcrs)]
 
 
-dist, indices = distance_cal(TCRs)
+# dist, indices = distance_cal(TCRs)
 
-dist=dist_to_matrix(dist, indices,len(cdr3_alpha)).astype(np.float64)
+# dist=dist_to_matrix(dist, indices,len(cdr3_alpha)).astype(np.float64)
 
 # save the distance matrix
 # np.save('distance_matrix.npy', dist)
 # dist = np.load('distance_matrix.npy')
+# load matrix from 'alpha_beta_homoSapiens_distance_matrix.csv'
+dist=pd.read_csv('../Distance calculation methods/levenshtein distance calculation/beta_musMusculus_distance_matrix.csv',index_col=0)
+dist=dist.to_numpy()
+
 
 epitope_num=len(set(epitope))
 
-cluster=DBSCAN(eps=22, min_samples=4, metric='precomputed')
+cluster=DBSCAN(eps=1, min_samples=4, metric='precomputed')
 cluster.fit(dist)
 
 # print(adjusted_rand_score(epitope, cluster.labels_))
@@ -84,14 +88,11 @@ print(pure_cluster_retention(cluster.labels_, epitope))
 print(normalized_mutual_info_score(epitope, cluster.labels_))
 
 '''
-def df2dict(df):
-    cluster_id = df.index
-    score = df.values
-    return dict(zip(cluster_id, score))
+
 # load the distance matrix
 
 # dist = np.load('distance_matrix.npy')
-eps_list = [i for i in range(10, 120, 2)]
+eps_list = [i for i in np.arange(1, 5, 1)]
 
 purity_fraction = []
 purity_retention = []
@@ -116,6 +117,7 @@ plt.show()
 
 
 
+
 # from left to right: purity fraction, purity retention, NMI
 # human combined (eps=70, min_samples=4) 0.42857142857142855 0.11241970021413276 0.4069359548003655
 # human alpha (eps=22, min_samples=4) 0.1951219512195122 0.043897216274089934 0.426454793081235
@@ -125,5 +127,10 @@ plt.show()
 # mouse alpha (eps=22, min_samples=4) 0.22580645161290322 0.06319290465631928 0.411312103709991
 # mouse beta (eps=22, min_samples=4) 0.2631578947368421 0.038802660753880266 0.4108547695686911
 
-
-
+# distance matrix from levenshtein distance calculation
+# human combined (eps=2, min_samples=4) 0.5208333333333334 0.11616702355460386 0.36551608829909404
+# human alpha (eps=1, min_samples=4) 0.13725490196078433 0.05139186295503212 0.4500430391069384
+# human beta (eps=1, min_samples=4) 0.03773584905660377 0.017130620985010708 0.5282425257994071
+# mouse combined (eps=2, min_samples=4) 0.6176470588235294 0.2039911308203991 0.4940629150950302
+# mouse alpha (eps=1, min_samples=4) 0.5121951219512195 0.18403547671840353 0.44441225839754983
+# mouse beta (eps=1, min_samples=4) 0.1 0.02771618625277162 0.4760897670682725
