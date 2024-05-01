@@ -37,7 +37,8 @@ from collections import Counter
 from sklearn.decomposition import PCA
 from sklearn.manifold import MDS
 import faiss
-from encoders.GIANA.query import *
+sys.path.append('..\encoders\GIANA\query.py')
+from encoders.GIANA.query import query
 
 blosum62=substitution_matrices.load('BLOSUM62')
 AAstring='ACDEFGHIKLMNPQRSTVWY'
