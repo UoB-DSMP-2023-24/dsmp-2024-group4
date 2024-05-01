@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.21)  1 MAY 2024 19:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.21)  1 MAY 2024 21:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**DSMP_Report.tex
-(./DSMP_Report.tex
+**DSMP_Report-2.tex
+(./DSMP_Report-2.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
 (c:/texlive/2024/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
@@ -263,12 +263,8 @@ File: l3backend-pdftex.def 2024-03-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count285
 \l__pdf_internal_box=\box55
 )
-(./DSMP_Report.aux
-
-LaTeX Warning: Label `fig' multiply defined.
-
-)
-\openout1 = `DSMP_Report.aux'.
+(./DSMP_Report-2.aux)
+\openout1 = `DSMP_Report-2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
@@ -308,21 +304,40 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 50.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 50.
+Underfull \hbox (badness 5431) in paragraph at lines 67--69
+\OT1/ptm/m/n/10 and multi-disease reper-toire clas-si-fi-ca-tion by iso-met-ric
+
+ []
 
 
-(c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 50.
+Underfull \hbox (badness 10000) in paragraph at lines 67--69
+\OT1/ptm/m/n/10 GI-ANA(Geometric Isometry-based TCR AligN-ment
+ []
 
 
-(c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 3919) in paragraph at lines 67--68
-[]\OT1/ptm/m/n/10 "TCR meta-clonotypes for biomarker dis-cov-ery with
+Underfull \hbox (badness 1448) in paragraph at lines 67--69
+\OT1/ptm/m/n/10 sac-ri-fic-ing ac-cu-racy), but also fa-cil-i-tates fast querie
+s of
+ []
+
+
+Underfull \hbox (badness 3354) in paragraph at lines 67--69
+\OT1/ptm/m/n/10 large ref-er-ence queues. It suc-cess-fully iden-ti-fied novel
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--69
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
+[]\OT1/ptm/m/n/10 "T cell re-cep-tor se-quence clus-ter-ing and anti-gen
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
+
  []
 
 [1{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/202
@@ -330,40 +345,281 @@ Underfull \hbox (badness 3919) in paragraph at lines 67--68
 
 
 ]
-Underfull \hbox (badness 1622) in paragraph at lines 77--78
-[]\OT1/ptm/m/n/10 This ar-ti-cle first pre-pro-cesses the dataset to pre-serve
+Underfull \hbox (badness 3919) in paragraph at lines 73--74
+[]\OT1/ptm/m/n/10 "TCR meta-clonotypes for biomarker dis-cov-ery with
  []
 
 
-Underfull \hbox (badness 3449) in paragraph at lines 77--78
-\OT1/ptm/m/n/10 'j.segm', 'species', 'mhc.a', 'mhc.b', 'mhc.class', 'anti-
+Underfull \hbox (badness 1400) in paragraph at lines 85--87
+[]\OT1/ptm/m/n/10 One-hot en-cod-ing [2] is a tech-nique for rep-re-sent-ing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--87
+
+ []
+
+
+Underfull \hbox (badness 5637) in paragraph at lines 88--90
+\OT1/ptm/m/n/10 ef-fec-tively. To over-come these lim-i-ta-tions, a pos-si-ble
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--90
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--98
+
  []
 
 [2]
-<fig1.png, id=19, 428.09938pt x 345.29pt>
+Underfull \hbox (badness 6173) in paragraph at lines 101--103
+\OT1/ptm/m/n/10 vec-tors us-ing or-di-nal cod-ing. The key com-pu-ta-tional
+ []
+
+
+Underfull \hbox (badness 2384) in paragraph at lines 101--103
+\OT1/ptm/m/n/10 com-pu-ta-tional ef-fi-ciency by re-duc-ing the di-men-sion-al-
+ity
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--103
+
+ []
+
+<fig1.png, id=13, 428.09938pt x 345.29pt>
 File: fig1.png Graphic file (type png)
 <use fig1.png>
-Package pdftex.def Info: fig1.png  used on input line 148.
-(pdftex.def)             Requested size: 176.38414pt x 142.26378pt.
- [3 <./fig1.png>] [4] [5]
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 3
-28.
+Package pdftex.def Info: fig1.png  used on input line 111.
+(pdftex.def)             Requested size: 126.0pt x 101.62784pt.
 
+Underfull \hbox (badness 2134) in paragraph at lines 116--118
+\OT1/ptm/m/n/10 ex-pres-sion pat-terns of TCRs).For a given set of TCR
+ []
+
+
+Underfull \hbox (badness 1859) in paragraph at lines 116--118
+\OT1/ptm/m/n/10 se-quences, the dis-tances be-tween all pos-si-ble pairs are
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--118
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--125
+
+ []
+
+
+Underfull \hbox (badness 1681) in paragraph at lines 135--137
+\OT1/ptm/m/n/10 through a tree-like struc-ture. Ag-glom-er-a-tive Hi-er-ar-chi-
+cal
+ []
+
+
+Underfull \hbox (badness 1509) in paragraph at lines 135--137
+\OT1/ptm/m/n/10 Clus-ter-ing takes the dis-tance be-tween data points as a
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--137
+
+ []
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 140
+.
+(c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 140
+.
+
+(c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [3 <./fig1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 158--160
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 168--170
+
+ []
+
+
+Underfull \hbox (badness 1939) in paragraph at lines 182--185
+ \OT1/ptm/m/it/10 1) Data Prepa-ra-tion: [][]  \OT1/ptm/m/n/10 The dataset con-
+tained sev-eral
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 182--185
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 186--188
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 189--191
+\OT1/ptm/m/n/10 'epi-tope','mhc.a', 'mhc.b', 'v.segm' and 'j.segm' and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 189--191
+
+ []
+
+[4]
+Underfull \hbox (badness 2941) in paragraph at lines 191--194
+ \OT1/ptm/m/it/10 2) Data Se-lec-tion: [][]  \OT1/ptm/m/n/10 We made a de-ci-si
+on to fo-cus
+ []
+
+
+Underfull \hbox (badness 1762) in paragraph at lines 191--194
+\OT1/ptm/m/n/10 with the pri-mary goal of ap-ply-ing find-ings di-rectly to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 191--194
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 195--197
+
+ []
+
+
+Underfull \hbox (badness 2088) in paragraph at lines 198--201
+\OT1/ptm/m/n/10 the model's per-for-mance on un-seen data. The pri-mary
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--201
+
+ []
+
+
+Underfull \hbox (badness 6725) in paragraph at lines 202--205
+\OT1/ptm/m/n/10 for build-ing pre-dic-tive mod-els to un-der-stand anti-gen
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--205
+
+ []
+
+
+Underfull \hbox (badness 1742) in paragraph at lines 206--209
+\OT1/ptm/m/n/10 Specif-i-cally, the Ran-dom For-est model ex-hib-ited higher
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--209
+
+ []
+
+
+Underfull \hbox (badness 2460) in paragraph at lines 211--213
+[]\OT1/ptm/m/n/10 Hyperparameter tun-ing of the Ran-dom For-est model
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--213
+
+ []
+
+
+LaTeX Warning: Reference `fig' on page 5 undefined on input line 224.
+
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 2
+51.
 (c:/texlive/2024/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 328.
-
-Underfull \hbox (badness 10000) in paragraph at lines 340--341
-[]\OT1/ptm/m/n/10 Data merg-ing: cdr3[]alpha[]df and cdr3[]beta[]df
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 251.
+ [5]
+Underfull \hbox (badness 2197) in paragraph at lines 262--264
+\OT1/ptm/m/n/10 classes were very low, in-di-cat-ing poor per-for-mance in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 340--341
-\OT1/ptm/m/n/10 were com-bined ac-cord-ing to the columns
+Underfull \hbox (badness 2503) in paragraph at lines 262--264
+\OT1/ptm/m/n/10 be-tween high ac-cu-racy and low F1 scores high-lighted
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--264
+
+ []
+
+
+Underfull \hbox (badness 1874) in paragraph at lines 265--268
+\OT1/ptm/m/n/10 that the SVM strug-gles with sev-eral classes, achiev-ing
+ []
+
+
+Underfull \hbox (badness 2020) in paragraph at lines 265--268
+\OT1/ptm/m/n/10 De-spite these strug-gles, the SVM has shown strengths
+ []
+
+
+Underfull \hbox (badness 1789) in paragraph at lines 265--268
+\OT1/ptm/m/n/10 nu-anced per-for-mance, es-pe-cially in pre-ci-sion and re-call
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--268
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 271--273
+
+ []
+
+
+Underfull \hbox (badness 2197) in paragraph at lines 274--276
+[]\OT1/ptm/m/n/10 This mixed out-come un-der-scores the Ran-dom For-est
+ []
+
+
+Underfull \hbox (badness 1688) in paragraph at lines 274--276
+\OT1/ptm/m/n/10 re-gres-sion. The high weighted av-er-age F1 scores (0.91
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 274--276
+
+ []
+
+<fig2.png, id=33, 326.21875pt x 232.87pt>
+File: fig2.png Graphic file (type png)
+<use fig2.png>
+Package pdftex.def Info: fig2.png  used on input line 279.
+(pdftex.def)             Requested size: 199.16928pt x 142.18195pt.
+[6 <./Fig2.png>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -375,40 +631,39 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6] (./DSMP_Report.aux)
+[7] (./DSMP_Report-2.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
  ***********
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4231 strings out of 474104
- 65672 string characters out of 5747502
- 1946496 words of memory out of 5000000
- 26562 multiletter control sequences out of 15000+600000
- 602825 words of font info for 124 fonts, out of 8000000 for 9000
+ 4209 strings out of 474104
+ 65276 string characters out of 5747502
+ 1945496 words of memory out of 5000000
+ 26541 multiletter control sequences out of 15000+600000
+ 598405 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,1173b,334s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/tex
-live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2024/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2024/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texl
-ive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2024/texmf-dis
-t/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw
-/times/utmr8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
->
-Output written on DSMP_Report.pdf (6 pages, 231633 bytes).
+ 57i,11n,65p,1250b,304s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/tex
+live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2024/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2024/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
+><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2024/
+texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2024/texmf-dist/fonts/
+type1/urw/times/utmr8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/ut
+mri8a.pfb>
+Output written on DSMP_Report-2.pdf (7 pages, 238291 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 94 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

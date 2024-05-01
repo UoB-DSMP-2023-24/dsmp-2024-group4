@@ -98,7 +98,7 @@
 	
 	\subsubsection{GIANA ENCODING} \
 	
-	GIANA\cite{b2} first encoded the CDR3 sequence to numeric vectors using ordinal coding. The key computational innovation in GIANA encoding lies in the application of serial non-commuting linear transformations to these numeric vectors. This process leverages a unitary transformation matrix that is a member of a 6-order cyclic group, enabling the transformation of CDR3 sequence data into high-dimensional Euclidean space. This encoding scheme not only enhances computational efficiency by reducing the dimensionality and complexity of the data but also retains the biological interpretability necessary for effective TCR analysis.
+	GIANA Encoding\cite{b2} converts TCR sequences into numerical representations of fixed dimensions. The core idea of GIANA Encoding is to use Autoencoder to learn the low-dimensional representation of TCR sequences. The Autoencoder consists of an encoder and a decoder that can learn a compressed representation of the data. In GIANA Encoding, the encoder is responsible for mapping the TCR sequence to the low-dimensional space, while the decoder is responsible for mapping the low-dimensional representation back to the original TCR sequence space.
     \\
 	
 	\subsection{Distance Calculation Methods:}
@@ -170,7 +170,6 @@
 	
 	In this study, the DBSCAN algorithm is used to cluster the data in the distance matrix, and the eps parameter (neighborhood radius) and min\_samples parameter (minimum number of samples) are set, which determine the clustering results, which include the clustering label of each sample point and the label of the noise point. Finally, the contour coefficient of the clustering result is calculated using silhouette\_score. The contour coefficient is an index to measure the degree of tightness and separation of clustering results, and the value range is between [-1, 1], and the closer the value is to 1, the better the clustering result.
 	
-	\subsection{Evaluation Matrix:}
 	In this study, there are three values worthy of our attention, namely purity fraction, purity fraction and NMI\cite{b1}.
 	\begin{itemize}
 		\item Purity Fraction is defined as the percentage of pure clusters in the clustering output, where a pure cluster is one where all the TCRs are specific to the most common epitope in that cluster. 
@@ -286,25 +285,7 @@
     The outcomes of the tuning revealed substantial improvements. For the Alpha chain, the optimal set of hyperparameters increased the weighted average F1 score to 0.91, up from pre-tuning scores, indicating a more precise balance between recall and precision in predicting various classes. Similarly, the Beta chain also showed improved performance with the same weighted average F1 score of 0.91. These enhancements suggest that the tuned Random Forest model is more adept at managing the skewed distributions and diversity of the dataset, leading to more reliable predictions. This improvement is particularly significant in a clinical setting, where accurate and dependable model predictions are crucial for developing targeted immunotherapies based on T-cell receptor specificities.
 	
 	\section{Further Work and Improvement}
-	\subsection{Short Term Improvements}
-	\subsubsection{Feature Engineering and Optimization} 
-	With more time, further refinement of the feature set could be beneficial. This could involve exploring more complex features derived from the existing data, such as higher-order interactions between features or more sophisticated transformation of the CDR3 lengths.
-	
-	\subsubsection{Model Tuning and Regularization Techniques}
-	While initial models have been established, additional tuning of hyperparameters and the application of regularization techniques could enhance model performance and prevent overfitting.
-	
-	\subsubsection{Cross-Validation and Robustness Checks}
-	 Implementing a more rigorous cross-validation framework to ensure the models are robust and generalizable across different data splits, which would help in assessing the stability of the predictions.
-	 
-	 \subsubsection{Incremental Data Integration}
-	 We can start incorporating incremental learning capabilities so that the model can continuously learn and improve from new data without the need for retraining from scratch.
-	 
-	 \subsection{ Long Term Extensions}
-	 \subsubsection{Artificial Intelligence and Deep Learning Models}
-	 In the long run, integrating deep learning approaches like convolutional neural networks (CNNs) or recurrent neural networks (RNNs) could significantly enhance the ability to model complex patterns in antigen specificity more effectively. This could also include exploring transformer models that have shown success in other sequence-based tasks in bioinformatics.
-	 \subsubsection{Automated Pipeline for Real-Time Analysis}
-	 Building an automated pipeline that integrates with existing healthcare systems to provide real-time analysis and predictions. This system could use the latest models to provide immediate insights into patient data, helping clinicians make faster and more informed decisions.
-	
+	{\color{blue}Explore what can be done further based on the discussed insights and ways to improve.}
     
 	
 	\section{Conclusion}
@@ -319,8 +300,9 @@
 		
 		\bibitem{b3} K. Mayer-Blackwell, S. Schattgen, L. Cohen-Lavi, et al., "TCR meta-clonotypes for biomarker discovery with tcrdist3 enabled identification of public, HLA-restricted clusters of SARS-CoV-2 TCRs," \textit{Elife}, vol. 10, p. e68605, 2021.
 		
-		\bibitem{b4} D. Müllner, "Modern hierarchical, agglomerative clustering algorithms," 
+		\bibitem{b4} D. Müllner, "Modern hierarchical, agglomerative clustering algorithms,"
 		\textit{arXiv preprint} arXiv:1109.2378, 2011.
+		
 		
 	\end{thebibliography}
 	
