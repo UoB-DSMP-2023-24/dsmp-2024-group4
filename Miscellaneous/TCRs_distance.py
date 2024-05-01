@@ -258,7 +258,7 @@ def dist_to_matrix(dist, indices, nseqs):
 
 def main():
 
-    df = pd.read_csv('pre-processing final/cdr3_alpha_beta_df.csv')
+    df = pd.read_csv('pre_processing_final/cdr3_alpha_beta_df.csv')
     human_df = df[df['species'] == 'HomoSapiens']
     mouse_df = df[df['species'] == 'MusMusculus']
     # TCRs = [TCR(cdr3_alpha[i], cdr3_beta[i], v_segm_alpha[i], v_segm_beta[i], j_segm_alpha[i], j_segm_beta[i], mhc_a[i], mhc_b[i], epitope[i]) for i in range(len(cdr3_alpha))]

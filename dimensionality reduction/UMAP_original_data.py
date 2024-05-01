@@ -11,7 +11,7 @@ from tcrdist.repertoire import TCRrep
 from sklearn.metrics import silhouette_score
 
 
-df = pd.read_csv('pre-processing final/cdr3_alpha_beta_df.csv')
+df = pd.read_csv('pre_processing_final/cdr3_alpha_beta_df.csv')
 
 human = df[df['species'] == 'HomoSapiens']
 human = remove_imbalance(human, threshold=10)
@@ -37,9 +37,9 @@ print(len(set(epitope_mouse)))
 CDR3_encoded=GIANA_encoder(TCRs_human)
 print(silhouette_score(CDR3_encoded, epitope_human))
 # save the encoded data
-# np.save('pre-processing final/human_CDR3_encoded.npy', CDR3_encoded)
+# np.save('pre_processing_final/human_CDR3_encoded.npy', CDR3_encoded)
 # load the encoded data
-# CDR3_encoded = np.load('pre-processing final/human_CDR3_encoded.npy')
+# CDR3_encoded = np.load('pre_processing_final/human_CDR3_encoded.npy')
 
 reducer = UMAP(random_state=42)
 human_cdr3_reduced_origin = reducer.fit_transform(CDR3_encoded)

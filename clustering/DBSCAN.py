@@ -16,7 +16,7 @@ from sklearn.metrics import adjusted_rand_score,silhouette_score,normalized_mutu
 from cluster_tools import pure_clusters_fraction,pure_cluster_retention
 
 
-df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
+df = pd.read_csv('../pre_processing_final/cdr3_alpha_beta_df.csv')
 # df = df[df['species'] == 'HomoSapiens']
 df = df[df['species'] == 'MusMusculus']
 # df = remove_imbalance(df, threshold=10)

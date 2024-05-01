@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 
-df = pd.read_csv('../pre-processing final/cdr3_alpha_beta_df.csv')
+df = pd.read_csv('../pre_processing_final/cdr3_alpha_beta_df.csv')
 df = df[df['species'] == 'HomoSapiens']
 # df = remove_imbalance(df, threshold=10)
 # df = sampler(df, n_samples=2000, n_epitopes=10)
